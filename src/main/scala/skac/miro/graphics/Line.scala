@@ -15,4 +15,6 @@ extends Graphic with GenericLine {
     case aff: Affine => Line(aff.transPt(end), genericAttribs)
     case _ => this
   }
+
+  def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

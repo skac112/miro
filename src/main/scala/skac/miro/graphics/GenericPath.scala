@@ -8,6 +8,6 @@ import skac.miro.Graphic._
  * @author slawek
  */
 trait GenericPath extends Graphic {
-  def subpaths: Seq[GenericSegCurve]
-  def addSubpath(subpath: GenericSegCurve) = Path(subpaths :+ subpath, genericAttribs)  
+  def subpaths: Subpaths
+  def +(subpath: GenericSegCurve, transl: Point) = Path(subpaths :+ (subpath, transl), genericAttribs)  
 }

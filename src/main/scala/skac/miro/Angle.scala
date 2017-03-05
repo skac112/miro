@@ -8,6 +8,12 @@ object Angle {
     case value if value > 2 * Pi => value - 2 * Pi * Math.floor(0.5 * value / Pi)
     case _ => value
   }
+
+  lazy val dtrF = Pi / 180.0
+
+  lazy val rtdF = 180.0 / Pi
+
+  def fromDeg(deg: Double) = Angle(dtrF * deg)
 }
 
 /**
@@ -23,4 +29,5 @@ case class Angle(value: Double) {
   def *(factor: Double) = normalize(factor * value)
   def normalize(value: Double): Angle = Angle(Angle.normVal(value))
   lazy val normVal: Double = Angle.normVal(value)
+  def toDeg = rtdF * value
 }

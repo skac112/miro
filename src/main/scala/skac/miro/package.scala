@@ -8,16 +8,21 @@ import skac.miro.transform._
 import skac.miro.segments._
 
 package object miro {
-  type PosGraphic = Tuple2[Graphic, Point]
+  import skac.miro.graphics._
+  type PosGraphic = (Graphic, Point)
   type Ensemble = Seq[PosGraphic]
   type SegEnsemble = Seq[Segment]
   type Transform = PosGraphic => PosGraphic
   type Points = Seq[Point]
+  type Subpath = (GenericSegCurve, Point)
+  type Subpaths = Seq[Subpath]
   implicit def Tuple2Point(Tuple: Tuple2[Double, Double]) = Point(Tuple._1, Tuple._2)
   implicit def double2Point(value: Double) = Point(value, .0)
-  implicit def angle2Double(angle: Angle) = angle.normVal
+  // implicit def angle2Double(angle: Angle) = angle.normVal
+  implicit def angle2Double(angle: Angle) = angle.value
   implicit def double2Angle(value: Double) = Angle(value)
   implicit def seg2SegCurve(seg: Segment): SegCurve = SegCurve(Seq(seg))
+  implicit def seq2SegCurve(seq: Seq[Segment]) = SegCurve(seq)
   def ori = Point(0.0, 0.0)
 
   def ensemble(graphic: Graphic): Ensemble = graphic match {

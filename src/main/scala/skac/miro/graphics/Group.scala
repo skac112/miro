@@ -1,6 +1,7 @@
-package skac.miro
+package skac.miro.graphics
 
 import skac.miro.Graphic._
+import skac.miro._
 
 /**
  * @author slawek
@@ -15,4 +16,5 @@ case class Group(elements: Ensemble, override val genericAttribs: GenericAttribs
     val new_pos_graph = trans(elements.last)
     Group(elements :+ new_pos_graph, genericAttribs)
   }
+  def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

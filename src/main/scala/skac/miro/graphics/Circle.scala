@@ -12,4 +12,6 @@ case class Circle(r: Double = 1.0,
   override val rx = r
   override val ry = r
   override val rotation = 0.0
+
+  def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)  
 }

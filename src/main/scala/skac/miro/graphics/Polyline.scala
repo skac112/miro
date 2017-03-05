@@ -12,4 +12,5 @@ case class Polyline(points: Points,
 extends GenericSegCurve with Graphic {
   override def segments = ((ori +: points.view).sliding(2) map {pts2 => LineSeg(pts2(1) - pts2(0))}).toSeq
   def toPolygon = Polygon(points, genericAttribs)
+  def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

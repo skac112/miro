@@ -12,5 +12,5 @@ case class Polygon(
   override val points: Seq[Point],
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
 extends GenericPolygon with Graphic {
-
+  def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

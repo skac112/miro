@@ -7,16 +7,17 @@ import skac.miro.Graphic._
 import skac.miro.graphics._
 
 /**
- * Wycinek pierscienia kolowego.
+ * Wycinek pierscienia kolowego (wstega lukowa).
+ * sa - start Angle
+ * ar - angle range
  * @author slawek
  */
-case class Stripe(r1: Double, r2: Double, sa: Angle, ar: Angle, override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
-  /**
-   * Linie w kolejnosci zgodnej z kierunkiem wskazowek zegara.
-   */
-  override lazy val subpaths = Seq(new GenericSegCurve {
+case class Stripe(rLow: Double, rHigh: Double, sa: Angle, ar: Angle, override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
+  lazy val curve = new GenericSegCurve {
     override lazy val segments = s1 :: ha :: s2 :: la :: Nil
-    override lazy val closed = true})
+    override lazy val closed = true }
+
+  override lazy val subpaths: Subpaths = Seq((curve, ori))
 
   /**
    * Poczatek 1-go odcinka.
@@ -26,11 +27,11 @@ case class Stripe(r1: Double, r2: Double, sa: Angle, ar: Angle, override val gen
   /**
    * Koniec 1-go odcinka i poczatek 1-go luku.
    */
-  lazy val p2 = (r2 - r1) rot sa
+  lazy val p2 = (rHigh - rLow) rot sa
 
-  lazy val p3 = (r2 rot (sa + ar)) - r1 rot sa
+  lazy val p3 = (rHigh rot (sa + ar)) - rLow rot sa
 
-  lazy val p4 = (r1 rot (sa + ar)) - r1 rot sa
+  lazy val p4 = (rLow rot (sa + ar)) - rLow rot sa
 
   /**
    * Odcinek nr 1.
@@ -40,7 +41,7 @@ case class Stripe(r1: Double, r2: Double, sa: Angle, ar: Angle, override val gen
   /**
    * Luk nr 1 (wiekszy)
    */
-  lazy val ha = Arc(r2, r2, .0, ar >= Pi, true, (p3 - p2))
+  lazy val ha = Arc(rHigh, rHigh, .0, ar >= Pi, true, (p3 - p2))
 
   /**
    * Odcinek nr 2.
@@ -50,10 +51,12 @@ case class Stripe(r1: Double, r2: Double, sa: Angle, ar: Angle, override val gen
   /**
    * Luk nr 2 (mniejszy)
    */
-  lazy val la = Arc(r1, r1, .0, ar >= Pi, false, (p1 - p4))
+  lazy val la = Arc(rLow, rLow, .0, ar >= Pi, false, (p1 - p4))
 
   /**
    * Srodek okregu (wzgledem punktu (0, 0) czyli poczatku 1-go odcinka).
    */
-  lazy val c = r1 rot -sa
+  lazy val c = rLow rot -sa
+
+  def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

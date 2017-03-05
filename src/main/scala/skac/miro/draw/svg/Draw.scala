@@ -16,7 +16,7 @@ import skac.miro.segments._
  */
 class Draw {
   private def drawEl(g: PosGraphic): Option[XMLElem] = (g match {
-    case (skac.miro.Group(elements, ga), pt) => Some(<g>{ for (el <- elements;
+    case (skac.miro.graphics.Group(elements, ga), pt) => Some(<g>{ for (el <- elements;
                                                      xml_elem <- drawEl(el))
                                                      yield xml_elem }</g>)
     case (skac.miro.graphics.Line(e, _), pt) => Some(<line x1={ pt.x.toString } y1={ pt.y.toString } x2={ (pt + e).x.toString } y2={ (pt + e).y.toString }/>)
@@ -86,26 +86,28 @@ class Draw {
   /**
    * Zwraca wartosc atrybutu "g" sciezki
    */
-  private def pathDAttr(subpaths: Seq[GenericSegCurve], pt: Point): String =
-    (subpaths.foldLeft("") {(curr: String, segs: GenericSegCurve) => {
+  private def pathDAttr(subpaths: Subpaths, pt: Point): String =
+    (subpaths.foldLeft("") {(curr: String, segs: Subpath) => {
       curr + subpathToDStr(segs, pt) + " "
     }}).trim
 
   // TODO! uzupelnic
-  private def subpathToDStr(subpath: GenericSegCurve, pt: Point): String =
-    subpath.segments.foldLeft(s"M ${pt.x}, ${pt.y}") {(curr: String, seg: Segment) => {
-      curr + " " + segToDStr(seg, pt)
-    }} + " C"
+  private def subpathToDStr(subpath: Subpath, pt: Point): String = {
+    val start_pt = subpath._2 + pt
+    subpath._1.segments.foldLeft(s"M ${start_pt.x},${start_pt.y}") {(curr: String, seg: Segment) => {
+      curr + " " + segToDStr(seg)
+    }} + " z"
+  }
 
-  private def segToDStr(seg: Segment, pt: Point): String = seg match {
+  private def segToDStr(seg: Segment): String = seg match {
     case LineSeg(end) => s"l ${seg.end.x} ${seg.end.y}"
     case HSeg(len) => s"h $len"
     case VSeg(len) => s"v $len"
-    case Arc(rx, ry, rotation, laf, sf, end) => s"a $rx $ry ${rotation.value} ${bool2Bit(laf)} ${bool2Bit(sf)} ${end.x} ${end.y}"
-    case Quadratic(cp, end) => s"q ${cp.x} ${cp.y} ${end.x} ${end.y}"
-    case SmoothQuadratic(end) => s"t ${end.x} ${end.y}"
-    case Cubic(cp1, cp2, end) => s"c ${cp1.x} ${cp1.y} ${cp2.x} ${cp2.y} ${end.x} ${end.y}"
-    case SmoothCubic(cp2, end) => s"s ${cp2.x} ${cp2.y} ${end.x} ${end.y}"
+    case Arc(rx, ry, rotation, laf, sf, end) => s"a $rx $ry ${rotation.value} ${bool2Bit(laf)} ${bool2Bit(sf)} ${end.x},${end.y}"
+    case Quadratic(cp, end) => s"q ${cp.x},${cp.y} ${end.x},${end.y}"
+    case SmoothQuadratic(end) => s"t ${end.x},${end.y}"
+    case Cubic(cp1, cp2, end) => s"c ${cp1.x},${cp1.y} ${cp2.x},${cp2.y} ${end.x},${end.y}"
+    case SmoothCubic(cp2, end) => s"s ${cp2.x},${cp2.y} ${end.x},${end.y}"
   }
 
   private def bool2Bit(b: Boolean): String = b match {

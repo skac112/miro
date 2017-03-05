@@ -10,7 +10,7 @@ import skac.miro.GenericRect
 //}
 
 /**
- * Rectangle. 
+ * Rectangle.
  * @author slawek
  */
 case class Rect(
@@ -19,5 +19,5 @@ case class Rect(
   override val rotation: Double = 0.0,
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
 extends GenericRect with Graphic {
-
+  def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

@@ -21,8 +21,11 @@ object Graphic {
  */
 trait Graphic {
   import Graphic._
+  import skac.miro.graphics._
 
   def genericAttribs: GenericAttribs = defaultGenericAttribs
+
+  def setGenericAttribs(newGenAttrs: GenericAttribs): Graphic
 
   /**
    * PosGraphic dla tej grafiki

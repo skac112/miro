@@ -19,5 +19,5 @@ case class Ellipse(
   override val rotation: Double = 0.0,
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
 extends GenericEllipse with Graphic {
-
+  def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }
