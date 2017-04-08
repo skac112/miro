@@ -100,4 +100,56 @@ object MathUtils {
   def tauToArcLen(tau: Angle, a: Double, b: Double, sf: Boolean) = {
 
   }
+
+  /**
+   * Wyznacza okregi o zadanym promieniu styczne do 2 innych okregow. Moze
+   * istniec 0, 1 lub 2 rozwiazania. Parametry loc1 i loc2 okreslaja, czy
+   * szukany okrag ma byc na zewnatrz (true), czy wewnatrz (false) odp. okregu
+   * stycznego
+   */
+  def cTanTo2c(x1: Double, y1: Double, r1: Double, loc1: Boolean, x2: Double,
+   y2: Double, r2: Double, loc2: Boolean, r: Double): Set[(Double, Double)] = {
+     val calc_case = x1 != x2
+     val (v11, v12, v21, v22) = calc_case match {
+       case true => (x1, x2, y1, y2)
+       case false => (y1, y2, x1, x2)
+     }
+     val s1 = if (loc1) -1 else 1
+     val s2 = if (loc2) -1 else 1
+     // wspolczynniki rownania x = ay + b
+     val a = (v21 - v22)/(v12 - v11)
+     val b = .5*(2*r*(s2*r2 - s1*r1) + r1*r1 - r2*r2 - v11*v11 - v21*v21 +
+      v12*v12 + v22*v22)/(v12 - v11)
+     // wspolczynniki rownania kwadratowego alfa*x^2 + beta*xs + gamma = 0
+     val alfa = a*a + 1
+     val beta = 2*(a*b - a*v11 - v21)
+     val gamma = -(r - s1*r1)*(r - s1*r1) + b*b - 2*b*v11 + v11*v11 + v21*v21
+     quadEqReal(alfa, beta, gamma) map {v => calc_case match {
+         case true => (a*v + b, v)
+         case false => (v, a*v + b)
+       }
+     }
+  }
+  /**
+   * Znajduje rozwiazania rzeczywiste rownania kwadratowego postaci
+   * ax^2 + bx + c = 0.
+   */
+  def quadEqReal(a: Double, b: Double, c: Double): Set[Double] = {
+    if (a != 0) {
+      val a2_inv = .5/a
+      val delta = b*b - 4*a*c
+      delta match {
+        case _ if delta > 0 => {
+          val delta_sq = sqrt(delta)
+          Set((-b - delta_sq)*a2_inv, (-b + delta_sq)*a2_inv)
+        }
+        case _ if delta == .0 => Set(-b*a2_inv)
+        case _ => Set()
+      }
+    }
+    else {
+      // zakladamy, ze b <> 0
+      Set(-c/b)
+    }
+  }
 }

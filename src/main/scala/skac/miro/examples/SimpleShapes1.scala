@@ -9,7 +9,7 @@ import skac.miro._
 
 object SimpleShapes1 {
   def group = {
-    val ga1 = GenericAttribs(Some(Color.red), Some(Stroke(Color.red, 3.0)))
+    val ga1 = GenericAttribs(Some(Color.red()), Some(Stroke(Color.red(), 3.0)))
     val line = Line((100.0, 100.0), ga1)
     val pos_line = (line, Point(10.0, 10.0))
     val pos_c = (Circle(30.0), Point(50.0, 50.0))

@@ -29,9 +29,9 @@ case class Stripe(rLow: Double, rHigh: Double, sa: Angle, ar: Angle, override va
    */
   lazy val p2 = (rHigh - rLow) rot sa
 
-  lazy val p3 = (rHigh rot (sa + ar)) - rLow rot sa
+  lazy val p3 = (rHigh rot (sa + ar)) - (rLow rot sa)
 
-  lazy val p4 = (rLow rot (sa + ar)) - rLow rot sa
+  lazy val p4 = (rLow rot (sa + ar)) - (rLow rot sa)
 
   /**
    * Odcinek nr 1.
@@ -56,7 +56,17 @@ case class Stripe(rLow: Double, rHigh: Double, sa: Angle, ar: Angle, override va
   /**
    * Srodek okregu (wzgledem punktu (0, 0) czyli poczatku 1-go odcinka).
    */
-  lazy val c = rLow rot -sa
+  lazy val c = rLow rot (sa.opposite)
+
+  /**
+   * Stripe width.
+   */
+  lazy val width = rHigh - rLow
+
+  /**
+   * End angle
+   */
+  lazy val ea = sa + ar
 
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

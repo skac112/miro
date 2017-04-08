@@ -14,7 +14,7 @@ import scala.math._
  */
 object SimpleShapes3 {
   def group = {
-    val ga = GenericAttribs(Some(Color.red), None)
+    val ga = GenericAttribs(Some(Color.red()), None)
     val ring = Ring(20, 15, ga)
     Group(ring :: Nil)
   }

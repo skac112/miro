@@ -4,7 +4,7 @@ import scala.math._
 
 object Angle {
   def normVal(value: Double): Double = value match {
-    case value if value < 0.0 => value + 2 * Pi * Math.ceil(0.5 * value / Pi)
+    case value if value < 0.0 => value + 2 * Pi * Math.ceil(0.5 * abs(value) / Pi)
     case value if value > 2 * Pi => value - 2 * Pi * Math.floor(0.5 * value / Pi)
     case _ => value
   }
@@ -30,4 +30,5 @@ case class Angle(value: Double) {
   def normalize(value: Double): Angle = Angle(Angle.normVal(value))
   lazy val normVal: Double = Angle.normVal(value)
   def toDeg = rtdF * value
+  def opposite = normalize(value + Pi)
 }

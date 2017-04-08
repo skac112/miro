@@ -11,7 +11,7 @@ import scala.math._
 
 object SimpleShapes2 {
   def group = {
-    val ga = GenericAttribs(Some(Color.red), None)
+    val ga = GenericAttribs(Some(Color.red()), None)
     val stripe = Stripe(10, 20, 0, .5 * Pi, ga)
     Group(stripe :: Nil)
   }

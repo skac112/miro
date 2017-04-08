@@ -7,37 +7,18 @@ import skac.miro._
 // import javafx.scene.paint.{Color => FXColor}
 
 object Color {
-  def red(Val: Double) = new Color(Val, 0.0, 0.0)
-  def green(Val: Double) = new Color(0.0, Val, 0.0)
-  def blue(Val: Double) = new Color(0.0, 0.0, Val)
-  // def alpha(Val: Double) = new Alpha(Val)
+  def red(v: Double = 1.0) = new Color(v, .0, .0)
+  def green(v: Double = 1.0) = new Color(.0, v, .0)
+  def blue(v: Double = 1.0) = new Color(.0, .0, v)
+  def cyan(v: Double = 1.0) = new Color(.0, v, v)
+  def magenta(v: Double = 1.0) = new Color(v, .0, v)
+  def yellow(v: Double = 1.0) = new Color(v, v, .0)
 
-  // def hsb2red(Hue: Double, Sat: Double, Bright: Double, Alpha: Double = 1.0) = {
-  //   val fxcolor = FXColor.hsb(Hue, Sat, Bright)
-  //   fxcolor.getRed
-  // }
-  //
-  // def hsb2green(Hue: Double, Sat: Double, Bright: Double, Alpha: Double = 1.0) = {
-  //   val fxcolor = FXColor.hsb(Hue, Sat, Bright)
-  //   fxcolor.getGreen
-  // }
-  //
-  // def hsb2blue(Hue: Double, Sat: Double, Bright: Double, Alpha: Double = 1.0) = {
-  //   val fxcolor = FXColor.hsb(Hue, Sat, Bright)
-  //   fxcolor.getBlue
-  // }
-
-  def normalize(Val: Double) = Val match {
+  def normalize(v: Double) = v match {
     case v if v > 1.0 => 1.0
     case v if v < 0.0 => 0.0
     case v => v
   }
-
-  def normalizeHue(Val: Double) = Val - (Val / 360.0).floor * 360
-
-  def red = Color(1.0, .0, .0)
-  def green = Color(.0, 1.0, .0)
-  def blue = Color(.0, .0, 1.0)
 
   lazy val pi_3_inv = 3.0 / Pi
 
@@ -52,7 +33,8 @@ object Color {
       case _ if hue_p >= 2 && hue_p < 3 => (.0, C, X)
       case _ if hue_p >= 3 && hue_p < 4 => (.0, X, C)
       case _ if hue_p >= 4 && hue_p < 5 => (X, .0, C)
-      case _ if hue_p >= 5 => (C, .0, X)
+      case _  => (C, .0, X)
+      // case _ if hue_p >= 5 => (C, .0, X)
     }
     val m = l - 0.5 * C
     Color(r1 + m, g1 + m, b1 + m)
@@ -63,11 +45,6 @@ import Color._
 
 case class Color(r: Double, g: Double, b: Double, a: Double = 1.0) extends Fill {
 
-  // val FXColor = new FXColor(Red, Green, Blue, Alpha)
-  // def this(FXColor: FXColor) = this(FXColor.getRed, FXColor.getGreen, FXColor.getBlue, FXColor.getOpacity())
-  // def Hue = FXColor.getHue
-  // def Sat = FXColor.getSaturation
-  // def Bright = FXColor.getBrightness
   def +:(other: Color) = Color(normalize(r + other.r), normalize(g + other.g), normalize(b + other.b), a)
   def -:(other: Color) = Color(normalize(r - other.r), normalize(g - other.g), normalize(b - other.b), a)
 
@@ -90,14 +67,14 @@ case class Color(r: Double, g: Double, b: Double, a: Double = 1.0) extends Fill 
    * Wartosc hue w modelu HSL. Zrodlo:
    * https://en.wikipedia.org/wiki/HSL_and_HSV
    */
-  lazy val hue: Angle = {
+  lazy val h: Angle = {
     val hue_60 = (r, g, b, C) match {
       case (_, _, _, .0) => .0
       case _ if M == r => (g - b) / C % 6
       case _ if M == g => (b - r) / C + 2
       case _ => (r - g) / C + 4
     }
-    Angle(hue_60 * Pi / 3.0)
+    Angle(Angle.normVal(hue_60 * Pi / 3.0))
   }
 
   /**
@@ -110,8 +87,15 @@ case class Color(r: Double, g: Double, b: Double, a: Double = 1.0) extends Fill 
    * Nasycenie (S) w modelu HSL. Zakres: <0; 1>. Zrodlo:
    * https://en.wikipedia.org/wiki/HSL_and_HSV
    */
-  lazy val sat: Double = l match {
+  lazy val s: Double = l match {
     case 1.0 => .0
     case _ => C / (1.0 - abs(2*l - 1.0))
   }
+
+  def addR(v: Double = 1.0) = Color(normalize(r + v), g, b)
+  def addG(v: Double = 1.0) = Color(r, normalize(g + v), b)
+  def addB(v: Double = 1.0) = Color(r, g, normalize(b + v))
+  def addH(v: Angle) = hsl(h + v, s, l)
+  def addS(v: Double) = hsl(h, normalize(s + v), l)
+  def addL(v: Double) = hsl(h, s, normalize(l + v))
 }

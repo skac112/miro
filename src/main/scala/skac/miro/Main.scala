@@ -8,10 +8,8 @@ import colors._
 import examples._
 import skac.miro.segments._
 
-object Main {
-   def main(args: Array[String]): Unit = {
-     val group = SimpleShapes4.group
-     val draw = new Draw()
-     draw.saveToFile(group, "simple_shapes_4.svg")
-   }
+object Main extends App {
+  val group = Example1.group
+  val draw = new Draw()
+  draw.saveToFile(group, "example1.svg")   
 }
