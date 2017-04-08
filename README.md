@@ -1,5 +1,5 @@
 # miro
-Library for handling vector graphics with SVG support and some DSL goodies.
+Library for vector graphics with SVG support and some DSL goodies.
 
 Miro is a library for handling vector graphics in an effective and expressive way, thanks to using Scala. It is designed for using primarily with SVG. As of today (2017-04-08) it is still on early stage and has only limited support for SVG, but this will change soonly.
 
@@ -28,6 +28,8 @@ val rotation = 45.deg
 p rot rotation
 
 res1: skac.miro.Point = Point(5.6843418860808015E-14,848.5281374238571)
+
+It is used by <a href="https://github.com/skac112/fractalizer">fractalizer</a>.
 
 
 
