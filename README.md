@@ -11,9 +11,9 @@ import skac.miro._
 
 import skac.miro.Point
 
-val p1 = (100, 100)
+val p1 = Point(100, 100)
 
-val p2 = (200, 200)
+val p2 = Point(200, 200)
 
 val p3 = (p1 + p2) * 2
 
