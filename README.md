@@ -5,20 +5,20 @@ Miro is a library for handling vector graphics in an effective and expressive wa
 It is partly inspired by Haskell's diagrams - for example, shapes are treated as equal if thay differ only by location, and also most of classes are immutable.
 Scala allows for some nice DSL-like features, for example when handling points or transformations:
 
-> import skac.miro.Point
-> import skac.miro._
-> val p1 = (100, 100)
-> val p2 = (200, 200)
-> val p3 = (p1 + p2) * 2
+import skac.miro.Point
+import skac.miro._
+val p1 = (100, 100)
+val p2 = (200, 200)
+val p3 = (p1 + p2) * 2
 
 p3: skac.miro.Point = Point(600.0,600.0)
 
-> -p3
+-p3
 
 res0: skac.miro.Point = Point(-600.0,-600.0)
 
-> val rotation = 45.deg
-> p rot rotation
+val rotation = 45.deg
+p rot rotation
 
 res0: skac.miro.Point = Point(-600.0,-600.0
 
