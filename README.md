@@ -27,7 +27,7 @@ val rotation = 45.deg
 
 p rot rotation
 
-res0: skac.miro.Point = Point(-600.0,-600.0
+res0: skac.miro.Point = Point(-600.0,-600.0)
 
 
 
