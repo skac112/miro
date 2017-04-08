@@ -7,8 +7,9 @@ It is partly inspired by Haskell's diagrams - for example, shapes are treated as
 
 Scala allows for some nice DSL-like features, for example when handling points or transformations:
 
-import skac.miro.Point
 import skac.miro._
+
+import skac.miro.Point
 
 val p1 = (100, 100)
 
