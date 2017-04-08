@@ -1,9 +1,9 @@
 # miro
 Library for vector graphics with SVG support and some DSL goodies.
 
-Miro is a library for handling vector graphics in an effective and expressive way, thanks to using Scala. It is designed for using primarily with SVG. As of today (2017-04-08) it is still on early stage and has only limited support for SVG, but this will change soonly.
+Miro is a library for handling vector graphics in an effective and expressive way, thanks to using Scala. It is designed for using primarily with SVG. As of today (2017-04-08) it is still in early stage and has only limited support for SVG, but this will change soonly.
 
-It is partly inspired by Haskell's diagrams - for example, shapes are treated as equal if thay differ only by location, and also most classes are immutable.
+It is partly inspired by Haskell's <a href="http://projects.haskell.org/diagrams/">diagrams</a> - for example, shapes are treated as equal if thay differ only by location, and also most classes are immutable.
 
 Scala allows for some nice DSL-like features, for example when handling points or transformations:
 
