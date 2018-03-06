@@ -8,17 +8,17 @@ object Dsl {
   /**
    * Prostokat.
    */
-  def R(w: Double = 1.0, h: Double = 1.0, r: Double = 0.0, ga: GenericAttribs = defaultGenericAttribs) = Rect(w, h, r, ga)
+  def R(w: Double = 1.0, h: Double = 1.0, rot: Double = 0.0, ga: GenericAttribs = defaultGenericAttribs) = Rect(w, h, rot, ga)
 
   /**
    * Kwadrat.
    */
-  def S(s: Double = 1.0, r: Double = 0.0, ga: GenericAttribs = defaultGenericAttribs) = Square(s, r, ga)
+  def S(s: Double = 1.0, rot: Double = 0.0, ga: GenericAttribs = defaultGenericAttribs) = Square(s, rot, ga)
 
   /**
    * Elipsa.
    */
-  def E(rx: Double = 1.0, ry: Double = 1.0, r: Double = 0.0, ga: GenericAttribs = defaultGenericAttribs) = Ellipse(rx, ry, r, ga)
+  def E(rx: Double = 1.0, ry: Double = 1.0, rot: Double = 0.0, ga: GenericAttribs = defaultGenericAttribs) = Ellipse(rx, ry, rot, ga)
 
   /**
    * Kolo.

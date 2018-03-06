@@ -10,12 +10,12 @@ import skac.miro.graphics.compounds._
 import scala.math._
 
 /**
- * Example - ring.
+ * Example - leaf.
  */
-object SimpleShapes4 {
+object ExampleLeaf {
   def group = {
     val ga = GenericAttribs(Some(Color.red()), None)
-    val ring = ArcSection(50, 0, 0.25 * Pi, ga)
-    Group(ring :: Nil)
+    val leaf = Leaf((100.0, .0), 70.0, -10.0, ga)
+    Group(leaf :: Nil)
   }
 }

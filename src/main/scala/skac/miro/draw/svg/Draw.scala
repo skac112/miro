@@ -16,10 +16,10 @@ import skac.miro.segments._
  */
 class Draw {
   private def drawEl(g: PosGraphic): Option[XMLElem] = (g match {
-    case (skac.miro.graphics.Group(elements, ga), pt) => Some(<g>{ for (el <- elements;
+    case (skac.miro.graphics.Group(elements, ga), pt) => Some(<g transform={ s"translate(${pt.x}, ${pt.y})" }>{ for (el <- elements;
                                                      xml_elem <- drawEl(el))
                                                      yield xml_elem }</g>)
-    case (skac.miro.graphics.Line(e, _), pt) => Some(<line x1={ pt.x.toString } y1={ pt.y.toString } x2={ (pt + e).x.toString } y2={ (pt + e).y.toString }/>)
+    case (Line(e, _), pt) => Some(<line x1={ pt.x.toString } y1={ pt.y.toString } x2={ (pt + e).x.toString } y2={ (pt + e).y.toString }/>)
     case (Circle(r, _), pt) => Some(<circle r={ r.toString } cx={ pt.x.toString } cy={ pt.y.toString }/>)
     case (r @ Rect(w, h, rot, _), pt) => {
       val tl = r.tl + pt
@@ -28,13 +28,36 @@ class Draw {
     }
     // case (Path(subpaths, _), pt) => Some(<path d="{ pathDAttr(subpaths, pt) }"/>)
     case (p: GenericPath, pt) => Some(<path d={ pathDAttr(p.subpaths, pt) }/>)
+    case (t @ Triangle(p2, p3, ga), pt) => Some(<polygon points={ pointsAttr(t.points, pt)}/>)
+    case (q @ Quad(p2, p3, p4, ga), pt) => Some(<polygon points={ pointsAttr(q.points, pt)}/>)
     case _ => None
   }) map {xml_elem: XMLElem => checkAddGenAttrs(xml_elem , g._1.genericAttribs)}
 
-  def draw(g: PosGraphic) = <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">{ drawEl(g).get }</svg>
+  def draw(g: PosGraphic) = {
+    val b = bounds(g)
+    val b_minx = b.tl.x
+    val b_miny = b.tl.y
+    val b_w = b.w
+    val b_h = b.h
+    val view_box = s"$b_minx $b_miny $b_w $b_h"
+    <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox={ view_box } preserveAspectRatio="xMidYMid meet">{ drawEl(g).get }</svg>
+  }
 
   def saveToFile(g: PosGraphic, filename: String): Unit =
     scala.xml.XML.save(filename, draw(g), "UTF-8", true, null)
+
+  def strDoc(g: PosGraphic): String = {
+    val elem = draw(g)
+    val writer = new java.io.StringWriter()
+    scala.xml.XML.write(writer, elem, "UTF-8", true, null)
+    writer.toString
+  }
+
+  def strEl(g: PosGraphic): Option[String] = drawEl(g) map {g_svg =>
+    val writer = new java.io.StringWriter()
+    scala.xml.XML.write(writer, g_svg, "UTF-8", true, null)
+    writer.toString
+  }
 
   private def genAttrsToStr(ga: GenericAttribs) =
     (strokeToStr(ga.strokeO) + fillToStr(ga.fillO) + transfToStr(ga.transformO)).trim
@@ -71,10 +94,17 @@ class Draw {
     case _ => elem
   }
 
+  def checkAddFillOpacityAttr(elem: XMLElem, fillO: Option[Fill]) = fillO match {
+    case Some(Color(_, _, _, 1.0)) => elem
+    case Some(Color(_, _, _, op)) => elem % new UnprefixedAttribute("fill-opacity", op.toString, Null)
+    case _ => elem
+  }
+
   def checkAddGenAttrs(elem: XMLElem, genAttrs: GenericAttribs): XMLElem = {
     val fun = {e: XMLElem => checkAddFillAttrs(e, genAttrs.fillO)} compose
      {e: XMLElem => checkAddStrokeAttr(e, genAttrs.strokeO)} compose
-     {e: XMLElem => checkAddStrokeWidthAttr(e, genAttrs.strokeO)}
+     {e: XMLElem => checkAddStrokeWidthAttr(e, genAttrs.strokeO)} compose
+     {e: XMLElem => checkAddFillOpacityAttr(e, genAttrs.fillO)}
 
     fun(elem)
   }
@@ -84,12 +114,15 @@ class Draw {
   }
 
   /**
-   * Zwraca wartosc atrybutu "g" sciezki
+   * Zwraca wartosc atrybutu "d" sciezki
    */
   private def pathDAttr(subpaths: Subpaths, pt: Point): String =
     (subpaths.foldLeft("") {(curr: String, segs: Subpath) => {
       curr + subpathToDStr(segs, pt) + " "
     }}).trim
+
+  private def pointsAttr(points: Points, pt: Point): String =
+   (ori +: points) map {_ + pt} map {pt => s"${pt.x},${pt.y}"} reduceLeft {_ + " " + _}
 
   // TODO! uzupelnic
   private def subpathToDStr(subpath: Subpath, pt: Point): String = {

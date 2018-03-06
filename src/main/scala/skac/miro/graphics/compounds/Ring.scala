@@ -27,7 +27,22 @@ case class Ring(rLow: Double, rHigh: Double, override val genericAttribs: Generi
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 
   /**
-   * Punkt srodka okregow pierscienia.
+   * Width of this ring.
+   */
+  lazy val width = rHigh - rLow
+
+  lazy val rMid = .5 * (rLow + rHigh)
+
+  /**
+   * Center point of circles of the stripe.
    */
   lazy val c = Point(-rHigh, .0)
+
+  def scaleWidth(scale: Double) = {
+    // new width
+    val new_w = scale * width
+    copy(rLow = rMid - .5 * new_w, rHigh = rMid + .5 * new_w)
+  }
+
+  override def bounds = super.bounds
 }

@@ -24,6 +24,7 @@ object Angle {
  */
 case class Angle(value: Double) {
   import Angle._
+  lazy val unary_- = Angle(2*Pi - normVal)
   def +(other: Angle) = normalize(value + other.value)
   def -(other: Angle) = normalize(value - other.value)
   def *(factor: Double) = normalize(factor * value)
@@ -31,4 +32,15 @@ case class Angle(value: Double) {
   lazy val normVal: Double = Angle.normVal(value)
   def toDeg = rtdF * value
   def opposite = normalize(value + Pi)
+
+  /**
+   * Determines if this angle lies in a given range. Range spans from start to
+   * end in positive direction.
+   */
+  def between(start: Angle, end: Angle): Boolean = {
+    val sn = start.normVal
+    val en = start.normVal
+    val n = normVal
+    (sn <= en && n >= sn && n <= en) || (sn >= en && (n >= sn || n <= en))
+  }
 }

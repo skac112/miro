@@ -10,12 +10,12 @@ import skac.miro.graphics.compounds._
 import scala.math._
 
 /**
- * Example - ring.
+ * Example - triangle.
  */
-object SimpleShapes4 {
+object ExampleTriangle {
   def group = {
     val ga = GenericAttribs(Some(Color.red()), None)
-    val ring = ArcSection(50, 0, 0.25 * Pi, ga)
-    Group(ring :: Nil)
+    val triangle = (Triangle(Point(100, 0), Point(50, 50), ga), Point(100, 100))
+    Group(triangle :: Nil)
   }
 }

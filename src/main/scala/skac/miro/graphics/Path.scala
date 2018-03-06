@@ -9,14 +9,16 @@ object Path {
   /**
    * Sciezka z pojedyncza podsciezka
    */
-  def simple(curves: GenericSegCurve, genericAttribs: GenericAttribs = defaultGenericAttribs) =
-    Path(Seq((curves, ori)), genericAttribs)
+  def simple(curve: GenericSegCurve, genericAttribs: GenericAttribs = defaultGenericAttribs) =
+    Path(Seq((curve, ori)), genericAttribs)
 }
 
 /**
  * Implementacja interfejsu Path odpowiadajaca elementowi Path w SVG.
  * @author slawek
  */
-case class Path(override val subpaths: Subpaths, override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
+case class Path(override val subpaths: Subpaths,
+ override val genericAttribs: GenericAttribs = defaultGenericAttribs)
+extends GenericPath {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

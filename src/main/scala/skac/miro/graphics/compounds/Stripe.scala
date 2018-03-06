@@ -6,13 +6,27 @@ import scala.math._
 import skac.miro.Graphic._
 import skac.miro.graphics._
 
+object Stripe {
+  def scaleWidth(pStripe: PosGraphic, scale: Double) = {
+    val (g, pt) = pStripe
+    val st = g toStripe
+    val new_st = st scaleWidth scale
+    val trans_v = (st.width - new_st.width) * .5 rot st.sa
+    (new_st, pt + trans_v)
+  }
+}
+
 /**
  * Wycinek pierscienia kolowego (wstega lukowa).
  * sa - start Angle
  * ar - angle range
  * @author slawek
  */
-case class Stripe(rLow: Double, rHigh: Double, sa: Angle, ar: Angle, override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
+case class Stripe(rLow: Double,
+ rHigh: Double,
+ sa: Angle,
+ ar: Angle,
+ override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
   lazy val curve = new GenericSegCurve {
     override lazy val segments = s1 :: ha :: s2 :: la :: Nil
     override lazy val closed = true }
@@ -69,4 +83,16 @@ case class Stripe(rLow: Double, rHigh: Double, sa: Angle, ar: Angle, override va
   lazy val ea = sa + ar
 
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
+
+  lazy val rMid = .5 * (rLow + rHigh)
+
+  /**
+   * Modifies width multiplying it by a given scale conserving radius of
+   * "middle" arc
+   */
+  def scaleWidth(scale: Double) = {
+    // new width
+    val new_w = scale * width
+    copy(rLow = rMid - .5 * new_w, rHigh = rMid + .5 * new_w)
+  }
 }

@@ -2,6 +2,7 @@ package skac.miro
 
 import skac.miro.transform._
 import attribs._
+import attribs.colors._
 
 object Graphic {
   case class GenericAttribs(
@@ -20,12 +21,16 @@ object Graphic {
  * @author slawek
  */
 trait Graphic {
+  // type T = this.type
   import Graphic._
-  import skac.miro.graphics._
+  import graphics._
+  import graphics.compounds._
 
   def genericAttribs: GenericAttribs = defaultGenericAttribs
 
   def setGenericAttribs(newGenAttrs: GenericAttribs): Graphic
+
+  // def same: T = this
 
   /**
    * PosGraphic dla tej grafiki
@@ -87,4 +92,48 @@ trait Graphic {
   def r(angle: Double) = doTransform(Rotation(angle))
   def r(rot: Rotation) = doTransform(rot)
   def s(scale: Scale) = doTransform(scale)
+
+  def fill(fill: Fill) = setGenericAttribs(genericAttribs.copy(fillO = Some(fill)))
+
+  def stroke(stroke: Stroke) = setGenericAttribs(genericAttribs.copy(strokeO = Some(stroke)))
+
+  def strCol(col: Color) = {
+    val stroke = genericAttribs.strokeO match {
+      case Some(stroke) => stroke
+      case _ => Stroke(Color(.0, .0, .0), 1.0)
+    }
+    setGenericAttribs(genericAttribs.copy(strokeO = Some(stroke.copy(color = col))))
+  }
+
+  def strWidth(w: Double) = {
+    val stroke = genericAttribs.strokeO match {
+      case Some(stroke) => stroke
+      case _ => Stroke(Color(.0, .0, .0), 1.0)
+    }
+    setGenericAttribs(genericAttribs.copy(strokeO = Some(stroke.copy(width = w))))
+  }
+
+  /**
+   * Creates PosGraphic from this graphic
+   * (ie. tuple of graphic and point) using given point.
+   */
+  def at(pt: Point) = (this, pt)
+
+  // def bounds = Bounds.empty
+  def bounds: Bounds
+
+  def toC: Circle = this.asInstanceOf[Circle]
+  def toStripe: Stripe = this.asInstanceOf[Stripe]
+  def toAS: ArcSection = this.asInstanceOf[ArcSection]
+  def toRing: Ring = this.asInstanceOf[Ring]
+  def toE: Ellipse = this.asInstanceOf[Ellipse]
+  def toG: Group = this.asInstanceOf[Group]
+  def toL: Line = this.asInstanceOf[Line]
+  def toP: Path = this.asInstanceOf[Path]
+  def toPolyg: Polygon = this.asInstanceOf[Polygon]
+  def toPolyl: Polyline = this.asInstanceOf[Polyline]
+  def toR: Rect = this.asInstanceOf[Rect]
+  def toS: Square = this.asInstanceOf[Square]
+  def toT: Triangle = this.asInstanceOf[Triangle]
+  def toQ: Quad = this.asInstanceOf[Quad]
 }

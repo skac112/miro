@@ -9,5 +9,6 @@ import skac.miro.Graphic._
  */
 trait GenericPath extends Graphic {
   def subpaths: Subpaths
-  def +(subpath: GenericSegCurve, transl: Point) = Path(subpaths :+ (subpath, transl), genericAttribs)  
+  def +(subpath: GenericSegCurve, transl: Point) = Path(subpaths :+ (subpath, transl), genericAttribs)
+  override def bounds = skac.miro.subpathsBounds(subpaths)
 }

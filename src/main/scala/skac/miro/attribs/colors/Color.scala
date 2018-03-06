@@ -39,11 +39,19 @@ object Color {
     val m = l - 0.5 * C
     Color(r1 + m, g1 + m, b1 + m)
   }
+
+  val transparent = Color(.0, .0, .0, .0)
+
+  def hex2int(hex: String): Int = Integer.parseInt(hex, 16)
+  def hex2double(hex: String) = hex2int(hex) / 255.0
 }
 
 import Color._
 
 case class Color(r: Double, g: Double, b: Double, a: Double = 1.0) extends Fill {
+  def this(webStr: String) = this(hex2double(webStr.substring(0, 2)),
+    hex2double(webStr.substring(2, 4)),
+    hex2double(webStr.substring(4, 6)))
 
   def +:(other: Color) = Color(normalize(r + other.r), normalize(g + other.g), normalize(b + other.b), a)
   def -:(other: Color) = Color(normalize(r - other.r), normalize(g - other.g), normalize(b - other.b), a)

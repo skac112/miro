@@ -8,7 +8,7 @@ import skac.miro.transform._
  * @author slawek
  */
 case class Line(
-  override val end: Point,
+  override val end: Point = Point(1, 0),
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
 extends Graphic with GenericLine {
   override def doTransform(trans: Transform): Graphic = trans match {
@@ -17,4 +17,6 @@ extends Graphic with GenericLine {
   }
 
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
+
+  override lazy val bounds = Bounds(ori, end)
 }

@@ -2,7 +2,7 @@ package skac.miro
 import org.scalatest._
 import skac.miro.MathUtils._
 
-class MathUtilsTest extends Spec {
+class MathUtilsTest extends FlatSpec with Matchers {
   "MathUtils" should "exactly calculate integral for x^3" in {
     integrate((x: Double) => {x * x * x}, 0, 10) should be (2500.0)
   }

@@ -20,4 +20,6 @@ case class Ellipse(
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
 extends GenericEllipse with Graphic {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
+
+  override def bounds: Bounds = ???
 }

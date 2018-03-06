@@ -2,6 +2,10 @@ package skac.miro.graphics
 
 import skac.miro._
 import skac.miro.Graphic._
+import skac.miro.MathUtils._
+
+object Circle {
+}
 
 /**
  * @author slawek
@@ -9,6 +13,7 @@ import skac.miro.Graphic._
 case class Circle(r: Double = 1.0,
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
   extends GenericEllipse with Graphic {
+  // type T = this.type
   override val rx = r
   override val ry = r
   override val rotation = 0.0
@@ -17,7 +22,7 @@ case class Circle(r: Double = 1.0,
 
   /**
    * Wyznacza okregi styczne do 2 innych okregow. Ze wzgledu na to, ze okrag w tym obiekcie
-   * ma juz ustalony obiekt, wyznaczyc trzeba tylko jego srodek i podac go pozniej
+   * ma juz ustalony promien, wyznaczyc trzeba tylko jego srodek i podac go pozniej
    * jako pkt wynikowego PosGraphic.
    * Parametry loc1 i loc2 okreslaja pożądane polozenie szukanego okregu względem
    * odp. okregow zadanych - czy szukany okrag ma zawierac w sobie czy nie
@@ -30,4 +35,6 @@ case class Circle(r: Double = 1.0,
       (Circle(r = this.r, genericAttribs = this.genericAttribs), Point(kv._1, kv._2))
     }
   }
+
+  override lazy val bounds = Bounds((-r, -r), (r, r))
 }

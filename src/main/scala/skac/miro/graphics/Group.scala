@@ -16,5 +16,8 @@ case class Group(elements: Ensemble, override val genericAttribs: GenericAttribs
     val new_pos_graph = trans(elements.last)
     Group(elements :+ new_pos_graph, genericAttribs)
   }
+
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
+
+  override def bounds = elements.foldLeft(Bounds.empty) {_ + skac.miro.bounds(_)}
 }

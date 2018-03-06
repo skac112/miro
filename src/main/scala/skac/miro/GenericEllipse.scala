@@ -1,8 +1,7 @@
 package skac.miro
 
 /**
- * Abstrakcyjna elipsa. Ze wzgledu na to, ze implementuje trait Curve, punkt ori odpowiada punktowi na elipsie
- * (zachodniemu kwadrantowi przed ew. obrotem) a nie jej srodkowi.
+ * Abstrakcyjna elipsa.
  * @author slawek
  */
 trait GenericEllipse extends Curve {
@@ -14,20 +13,20 @@ trait GenericEllipse extends Curve {
   /**
    * Polnocny kwadrant.
    */
-  lazy val nq = (rx, -ry) rot rotation
+  // lazy val nq = (rx, -ry) rot rotation
 
   /**
    * Wschodni kwadrant.
    */
-  lazy val eq = (rx, 0.0) rot rotation
+  // lazy val eq = (rx, 0.0) rot rotation
 
   /**
    * Poludniowy kwadrant.
    */
-  lazy val sq = (0.0, ry) rot rotation
+  // lazy val sq = (0.0, ry) rot rotation
 
   /**
    * Zachodni kwadrant rowny jest ori.
    */
-  lazy val wq = ori
+  // lazy val wq = ori
 }

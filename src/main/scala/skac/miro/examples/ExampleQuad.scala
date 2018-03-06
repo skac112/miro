@@ -10,12 +10,12 @@ import skac.miro.graphics.compounds._
 import scala.math._
 
 /**
- * Example - ring.
+ * Example - quad.
  */
-object SimpleShapes4 {
+object ExampleQuad {
   def group = {
     val ga = GenericAttribs(Some(Color.red()), None)
-    val ring = ArcSection(50, 0, 0.25 * Pi, ga)
-    Group(ring :: Nil)
+    val quad = (Quad(Point(100, 0), Point(100, 100), Point(0, 100), ga), Point(100, 100))
+    Group(quad :: Nil)
   }
 }
