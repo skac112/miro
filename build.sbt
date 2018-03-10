@@ -1,5 +1,5 @@
 // lazy val root = (project in file(".")).
-  // settings(
+//   settings(
 name := "miro"
 version := "1.0.2-SNAPSHOT"
 scalaVersion := "2.12.3"

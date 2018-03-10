@@ -26,6 +26,11 @@ class Draw {
       val rot_str = s"rotate($rot, ${tl.x}, ${tl.y})"
       Some(<rect x={ tl.x.toString } y={ tl.y.toString} width={ w.toString } height={ h.toString } transform={ rot_str }/>)
     }
+    case (s @ Square(size, rot, _), pt) => {
+      val tl = s.tl + pt
+      val rot_str = s"rotate($rot, ${tl.x}, ${tl.y})"
+      Some(<rect x={ tl.x.toString } y={ tl.y.toString} width={ size.toString } height={ size.toString } transform={ rot_str }/>)
+    }
     // case (Path(subpaths, _), pt) => Some(<path d="{ pathDAttr(subpaths, pt) }"/>)
     case (p: GenericPath, pt) => Some(<path d={ pathDAttr(p.subpaths, pt) }/>)
     case (t @ Triangle(p2, p3, ga), pt) => Some(<polygon points={ pointsAttr(t.points, pt)}/>)

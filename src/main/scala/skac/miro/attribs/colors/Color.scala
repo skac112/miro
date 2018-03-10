@@ -96,7 +96,8 @@ case class Color(r: Double, g: Double, b: Double, a: Double = 1.0) extends Fill 
    * https://en.wikipedia.org/wiki/HSL_and_HSV
    */
   lazy val s: Double = l match {
-    case 1.0 => .0
+    case 1.0 => 0
+    case 0 => 1.0
     case _ => C / (1.0 - abs(2*l - 1.0))
   }
 
