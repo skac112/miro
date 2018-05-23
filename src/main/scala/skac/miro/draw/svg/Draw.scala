@@ -9,6 +9,7 @@ import skac.miro.attribs._
 import skac.miro.attribs.colors._
 import skac.miro.transform._
 import skac.miro.segments._
+import scala.math._
 // import scalaz._
 
 /**
@@ -23,12 +24,16 @@ class Draw {
     case (Circle(r, _), pt) => Some(<circle r={ r.toString } cx={ pt.x.toString } cy={ pt.y.toString }/>)
     case (r @ Rect(w, h, rot, _), pt) => {
       val tl = r.tl + pt
-      val rot_str = s"rotate($rot, ${tl.x}, ${tl.y})"
+      // conversion to degrees
+      val rot_rad = rot * 180 / Pi
+      val rot_str = s"rotate($rot_rad, ${tl.x}, ${tl.y})"
       Some(<rect x={ tl.x.toString } y={ tl.y.toString} width={ w.toString } height={ h.toString } transform={ rot_str }/>)
     }
     case (s @ Square(size, rot, _), pt) => {
       val tl = s.tl + pt
-      val rot_str = s"rotate($rot, ${tl.x}, ${tl.y})"
+      // conversion to degrees
+      val rot_rad = rot * 180 / Pi
+      val rot_str = s"rotate($rot_rad, ${tl.x}, ${tl.y})"
       Some(<rect x={ tl.x.toString } y={ tl.y.toString} width={ size.toString } height={ size.toString } transform={ rot_str }/>)
     }
     // case (Path(subpaths, _), pt) => Some(<path d="{ pathDAttr(subpaths, pt) }"/>)

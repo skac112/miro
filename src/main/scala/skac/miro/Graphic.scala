@@ -35,7 +35,7 @@ trait Graphic {
   /**
    * PosGraphic dla tej grafiki
    */
-  def pg = (this, ori)
+  def pg(pt: Point = ori) = (this, pt)
 
   /**
    * Inkluzja. 2-ga grafika dodawana jest bez rozbijania. Jesli 1-sza grafika jest grupa, to nastepuje
@@ -54,7 +54,7 @@ trait Graphic {
   /**
    * Utworzenie grupy 2-elementowej
    */
-  def ++(Other: PosGraphic) = Group(Seq(pg, Other))
+  def ++(Other: PosGraphic) = Group(Seq(pg(), Other))
 
   /**
    * Inkluzja transformacji ostatniego elementu

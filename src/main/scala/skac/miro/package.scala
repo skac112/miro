@@ -35,6 +35,8 @@ package object miro {
 
   implicit def graphicToPosGraphic(graphic: Graphic) = (graphic, ori)
   implicit def posGraphicTpGraphic(posGraphic: PosGraphic): Graphic = posGraphic._1
+  implicit def posGraphicToRichPosGraphic(posGraphic: PosGraphic) = RichPosGraphic(posGraphic)
+  implicit def richPosGraphicToPosGraphic(rpg: RichPosGraphic) = rpg.pg
   implicit def doubleToRot(value: Double) = Rotation(value)
   implicit def angleToRot(angle: Angle) = Rotation(angle.normVal)
   implicit def stringToCol(webStr: String) = new Color(webStr)

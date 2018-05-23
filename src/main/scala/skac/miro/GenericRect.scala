@@ -9,7 +9,8 @@ trait GenericRect extends GenericPolygon {
   def width: Double
   def height: Double
   def rotation: Double
-  override lazy val points = Seq(Point(width, .0), Point(width, height), Point(.0, height)) map {p: Point => {p rot rotation}}
+  override lazy val points = Seq(Point(width, .0), Point(width, height),
+   Point(.0, height)) map {p: Point => {p rot rotation}}
 
   /**
    * Lewy gorny naroznik (oznaczenie naroznikow bez uwzglednienia obrotu) - lewym gornym naroznikiem jest odp. naroznik przed ew. obrotem
@@ -57,4 +58,5 @@ trait GenericRect extends GenericPolygon {
   lazy val c = points(2) * .5
 
   override lazy val len = 2 * width + 2 * height
+  override def bounds = Bounds.forPts(Set(tl, tr, tc, rc))
 }
