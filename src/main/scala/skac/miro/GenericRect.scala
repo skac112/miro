@@ -1,5 +1,7 @@
 package skac.miro
 
+import com.github.skac112.vgutils._
+
 /**
  * Abstrakcyjny prostokat. Punkt (0, 0) odpowiada lewemu gornemu naroznikowi (lub jego odpowiednikowi po uwzglednieniu
  * kata obrotu).
@@ -10,7 +12,7 @@ trait GenericRect extends GenericPolygon {
   def height: Double
   def rotation: Double
   override lazy val points = Seq(Point(width, .0), Point(width, height),
-   Point(.0, height)) map {p: Point => {p rot rotation}}
+   Point(.0, height)) map { p: Point => {p rot rotation}}
 
   /**
    * Lewy gorny naroznik (oznaczenie naroznikow bez uwzglednienia obrotu) - lewym gornym naroznikiem jest odp. naroznik przed ew. obrotem
@@ -35,22 +37,22 @@ trait GenericRect extends GenericPolygon {
   /**
    * Srodek gornego boku (oznaczenie bokow bez uwzgledniania obrotu).
    */
-  lazy val tc = points(1) * .5
+  lazy val t = points(1) * .5
 
   /**
    * Srodek prawego boku (oznaczenie bokow bez uwzgledniania obrotu).
    */
-  lazy val rc = (points(1) + points(2)) * .5
+  lazy val r = (points(1) + points(2)) * .5
 
   /**
    * Srodek dolnego boku (oznaczenie bokow bez uwzgledniania obrotu).
    */
-  lazy val bc = (points(2) + points(3)) * .5
+  lazy val b = (points(2) + points(3)) * .5
 
   /**
    * Srodek lewego boku (oznaczenie bokow bez uwzgledniania obrotu).
    */
-  lazy val lc = points(3) * .5
+  lazy val l = points(3) * .5
 
   /**
    * Punkt srodkowy
@@ -58,5 +60,5 @@ trait GenericRect extends GenericPolygon {
   lazy val c = points(2) * .5
 
   override lazy val len = 2 * width + 2 * height
-  override def bounds = Bounds.forPts(Set(tl, tr, tc, rc))
+  override def bounds = Bounds.forPts(Set(tl, tr, bl, br))
 }

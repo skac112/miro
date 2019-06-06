@@ -1,9 +1,9 @@
 package skac.miro.graphics
 
 import skac.miro._
-import skac.miro.transform._
 import skac.miro.Graphic._
 import skac.miro.GenericEllipse
+import com.github.skac112.vgutils._
 
 //object Ellipse {
 //  def unapply(ellipse: Ellipse) = Some((ellipse.rx, ellipse.ry, ellipse.genericAttribs))

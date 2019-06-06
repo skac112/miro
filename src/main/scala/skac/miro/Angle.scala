@@ -2,7 +2,7 @@ package skac.miro
 
 import scala.math._
 
-object Angle {
+object Angle_old {
   def normVal(value: Double): Double = value match {
     case value if value < 0.0 => value + 2 * Pi * Math.ceil(0.5 * abs(value) / Pi)
     case value if value > 2 * Pi => value - 2 * Pi * Math.floor(0.5 * value / Pi)
@@ -13,7 +13,7 @@ object Angle {
 
   lazy val rtdF = 180.0 / Pi
 
-  def fromDeg(deg: Double) = Angle(dtrF * deg)
+  def fromDeg(deg: Double) = Angle_old(dtrF * deg)
 }
 
 /**
@@ -22,14 +22,14 @@ object Angle {
  * ujemna).
  * @author slawek
  */
-case class Angle(value: Double) {
-  import Angle._
-  lazy val unary_- = Angle(2*Pi - normVal)
-  def +(other: Angle) = normalize(value + other.value)
-  def -(other: Angle) = normalize(value - other.value)
+case class Angle_old(value: Double) {
+  import Angle_old._
+  lazy val unary_- = Angle_old(2*Pi - normVal)
+  def +(other: Angle_old) = normalize(value + other.value)
+  def -(other: Angle_old) = normalize(value - other.value)
   def *(factor: Double) = normalize(factor * value)
-  def normalize(value: Double): Angle = Angle(Angle.normVal(value))
-  lazy val normVal: Double = Angle.normVal(value)
+  def normalize(value: Double): Angle_old = Angle_old(Angle_old.normVal(value))
+  lazy val normVal: Double = Angle_old.normVal(value)
   def toDeg = rtdF * value
   def opposite = normalize(value + Pi)
 
@@ -37,7 +37,7 @@ case class Angle(value: Double) {
    * Determines if this angle lies in a given range. Range spans from start to
    * end in positive direction.
    */
-  def between(start: Angle, end: Angle): Boolean = {
+  def between(start: Angle_old, end: Angle_old): Boolean = {
     val sn = start.normVal
     val en = start.normVal
     val n = normVal

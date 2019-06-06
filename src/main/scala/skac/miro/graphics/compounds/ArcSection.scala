@@ -5,6 +5,7 @@ import skac.miro._
 import scala.math._
 import skac.miro.Graphic._
 import skac.miro.graphics._
+import com.github.skac112.vgutils._
 
 /**
  * Wycinek kola.
@@ -28,9 +29,9 @@ case class ArcSection(r: Double, sa: Angle, ar: Angle, override val genericAttri
   /**
    * Koniec 1-go odcinka i poczatek 1-go luku.
    */
-  lazy val p2 = r rot sa
+  lazy val p2: Point = new Point(r, sa)
 
-  lazy val p3 = r rot (sa + ar)
+  lazy val p3: Point = new Point(r, sa + ar)
 
   /**
    * Odcinek nr 1.

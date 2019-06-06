@@ -3,7 +3,7 @@ package skac.miro.segments
 import skac.miro._
 import scalaz._
 import Scalaz._
-import skac.miro.Bounds._
+import com.github.skac112.vgutils._
 
 /**
  * @author slawek
@@ -34,7 +34,7 @@ case class Quadratic(cp: Point, override val end: Point) extends GenericQuadrati
     } yield end
 
     val (pts, _) = addPtsForBounds.run(Set.empty)
-    forPts(pts)
+    Bounds.forPts(pts)
   }
 
   /**

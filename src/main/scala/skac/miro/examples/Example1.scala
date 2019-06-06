@@ -6,11 +6,12 @@ import skac.miro.draw.svg._
 import skac.miro.attribs._
 import skac.miro.attribs.colors._
 import skac.miro._
+import com.github.skac112.vgutils._
 
 object Example1 {
   def group = {
-    val ga1 = GenericAttribs(None, Some(Stroke(Color.red(), 1.0)))
-    val ga = GenericAttribs(None, Some(Stroke(Color.blue(), 1.0)))
+    val ga1 = GenericAttribs(None, Some(Stroke(MiroColor.red(), 1.0)))
+    val ga = GenericAttribs(None, Some(Stroke(MiroColor.blue(), 1.0)))
     val c_pos1 = (Circle(100.0, ga1), Point(.0, .0))
     val c_pos2 = (Circle(50.0, ga1), Point(200.0, .0))
     val c = Circle(70.0, ga)

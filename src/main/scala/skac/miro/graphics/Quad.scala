@@ -2,7 +2,8 @@ package skac.miro.graphics
 import skac.miro._
 import skac.miro.Graphic._
 import scala.math._
-import skac.miro.transform._
+import com.github.skac112.vgutils._
+import com.github.skac112.vgutils.transform._
 
 object Quad {
   /**
@@ -39,9 +40,9 @@ object Quad {
 }
 
 case class Quad(v2: Point = Point(1, 0),
- v3: Point = Point(1, 1),
- v4: Point = Point(0, 1),
- override val genericAttribs: GenericAttribs = defaultGenericAttribs)
+                v3: Point = Point(1, 1),
+                v4: Point = Point(0, 1),
+                override val genericAttribs: GenericAttribs = defaultGenericAttribs)
 extends GenericPolygon with Graphic {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
   override lazy val points = Seq(v2, v3, v4)

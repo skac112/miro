@@ -2,7 +2,7 @@ package skac.miro.segments
 
 import skac.miro._
 import scala.math._
-import skac.miro.Bounds._
+import com.github.skac112.vgutils._
 
 /**
  * @author slawek
@@ -56,6 +56,10 @@ case class Cubic(cp1: Point, cp2: Point, override val end: Point) extends Generi
     yield ptAtParam(t)
   }
 
+  /**
+    * Calculates set of y-extremum points. In general, there can be zero, one or
+    * two such points.
+    */
   def extrY: Set[Point] = {
     val t1 = (imy_3 - imy_2)*imy_4
     val t2 = (imy_3 + imy_2)*imy_4
@@ -63,5 +67,5 @@ case class Cubic(cp1: Point, cp2: Point, override val end: Point) extends Generi
     yield ptAtParam(t)
   }
 
-  override lazy val bounds = forPts(Set(ori, end) ++ extrX ++ extrY)
+  override lazy val bounds = Bounds.forPts(Set(ori, end) ++ extrX ++ extrY)
 }

@@ -2,7 +2,7 @@ package skac.miro.graphics
 
 import skac.miro._
 import skac.miro.Graphic._
-import skac.miro.MathUtils._
+import com.github.skac112.vgutils._
 
 object Circle {
 }
@@ -28,13 +28,22 @@ case class Circle(r: Double = 1.0,
    * odp. okregow zadanych - czy szukany okrag ma zawierac w sobie czy nie
    * dany okrag styczny.
    */
-  def tanTo2c(c1: PosGraphic, c2: PosGraphic, loc1: Boolean, loc2: Boolean): Set[PosGraphic] = {
+  def tanTo2c(c1: PosGraphic[Circle], c2: PosGraphic[Circle], loc1: Boolean, loc2: Boolean): Set[PosGraphic[Circle]] = {
     MathUtils.cTanTo2c(c1._2.x, c1._2.y,
-     c1._1.asInstanceOf[Circle].r, loc1, c2._2.x, c2._2.y,
-     c2._1.asInstanceOf[Circle].r, loc2, r) map {kv =>
+     c1._1.r, loc1, c2._2.x, c2._2.y,
+     c2._1.r, loc2, r) map {kv =>
       (Circle(r = this.r, genericAttribs = this.genericAttribs), Point(kv._1, kv._2))
     }
   }
 
   override lazy val bounds = Bounds((-r, -r), (r, r))
+
+  override def cp(code: Symbol) = code match {
+    case 'NQ => nq
+    case 'SQ => sq
+    case 'EQ => eq
+    case 'WQ => wq
+    case 'C => ori
+    case _ => super.cp(code)
+  }
 }

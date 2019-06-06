@@ -20,4 +20,17 @@ case class Rect(
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
 extends GenericRect with Graphic {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
+
+  override def cp(code: Symbol) = code match {
+    case 'TL => tl
+    case 'TR => tr
+    case 'BL => bl
+    case 'BR => br
+    case 'T => t
+    case 'R => r
+    case 'B => b
+    case 'L => l
+    case 'C => c
+    case _ => super.cp(code)
+  }
 }

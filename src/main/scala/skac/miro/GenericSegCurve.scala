@@ -3,6 +3,7 @@ package skac.miro
 import graphics._
 import attribs._
 import segments._
+import com.github.skac112.vgutils._
 
 object GenericSegCurve {
   type CurveTrans = Curve => Curve

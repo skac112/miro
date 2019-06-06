@@ -14,7 +14,7 @@ import scala.math._
  */
 object SimpleShapes4 {
   def group = {
-    val ga = GenericAttribs(Some(Color.red()), None)
+    val ga = GenericAttribs(Some(MiroColor.red()), None)
     val ring = ArcSection(50, 0, 0.25 * Pi, ga)
     Group(ring :: Nil)
   }

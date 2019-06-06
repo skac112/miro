@@ -1,6 +1,7 @@
 package skac.miro.segments
 
 import skac.miro._
+import com.github.skac112.vgutils._
 
 /**
  * Segment - pionowy odcinek

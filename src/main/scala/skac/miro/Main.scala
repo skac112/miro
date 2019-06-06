@@ -6,14 +6,14 @@ import Graphic._
 import draw.svg._
 import attribs._
 import colors._
-import Color._
+import MiroColor._
 import examples._
 import skac.miro.segments._
-import skac.miro.MathUtils._
 import skac.miro.Dsl._
+import com.github.skac112.vgutils._
 
 object Main extends App {
-  val col1 = Color(.1,.1,.0)
+  val col1 = new MiroColor(.1,.1,.0)
   val circles = (0 to 10) map {i =>
     val color = col1.addL(i/20.0)
     println(color)

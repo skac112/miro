@@ -5,13 +5,13 @@ import skac.miro._
 import scala.math._
 import skac.miro.Graphic._
 import skac.miro.graphics._
+import com.github.skac112.vgutils._
 
 object Stripe {
-  def scaleWidth(pStripe: PosGraphic, scale: Double) = {
-    val (g, pt) = pStripe
-    val st = g toStripe
+  def scaleWidth(pStripe: PosGraphic[Stripe], scale: Double) = {
+    val (st, pt) = pStripe
     val new_st = st scaleWidth scale
-    val trans_v = (st.width - new_st.width) * .5 rot st.sa
+    val trans_v = new Point((st.width - new_st.width) * .5, st.sa)
     (new_st, pt + trans_v)
   }
 }
@@ -41,11 +41,11 @@ case class Stripe(rLow: Double,
   /**
    * Koniec 1-go odcinka i poczatek 1-go luku.
    */
-  lazy val p2 = (rHigh - rLow) rot sa
+  lazy val p2 = new Point(rHigh - rLow, sa)
 
-  lazy val p3 = (rHigh rot (sa + ar)) - (rLow rot sa)
+  lazy val p3 = new Point(rHigh, sa + ar) - new Point(rLow, sa)
 
-  lazy val p4 = (rLow rot (sa + ar)) - (rLow rot sa)
+  lazy val p4 = new Point(rLow, sa + ar) - new Point(rLow, sa)
 
   /**
    * Odcinek nr 1.
@@ -70,7 +70,7 @@ case class Stripe(rLow: Double,
   /**
    * Srodek okregu (wzgledem punktu (0, 0) czyli poczatku 1-go odcinka).
    */
-  lazy val c = rLow rot (sa.opposite)
+  lazy val c = new Point(rLow, sa.opposite)
 
   /**
    * Stripe width.

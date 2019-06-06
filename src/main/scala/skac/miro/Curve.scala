@@ -1,6 +1,7 @@
 package skac.miro
 
 import skac.miro.Graphic._
+import com.github.skac112.vgutils._
 
 /**
  * @author slawek

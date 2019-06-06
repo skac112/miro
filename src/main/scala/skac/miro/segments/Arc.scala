@@ -1,10 +1,8 @@
 package skac.miro.segments
 
 import skac.miro._
-import skac.miro.Angle
-import skac.miro.Angle._
 import scala.math._
-import skac.miro.Bounds._
+import com.github.skac112.vgutils._
 
 object Arc {
   /**
@@ -49,12 +47,13 @@ case class Arc(
   private def calcCen: Point = {
     // transformacja punktow p1 i p2
     val p1p: Point = (end * -0.5) rot -rotation
-    val sign = if (largeArcFlag != sweepFlag) 1 else -1
+//    val sign = if (largeArcFlag != sweepFlag) 1 else -1
+    val sign = if (largeArcFlag == sweepFlag) 1 else -1
     val a2 = rx*rx
     val b2 = ry*ry
     val p1p2 = Point(p1p.x * p1p.x, p1p.y * p1p.y)
     // srodek elipsy w transformacji ("primowany")
-    val cp = (rx * p1p.y / ry, -ry*p1p.x / rx) * sign * sqrt((a2*b2 - a2*p1p2.y - b2*p1p2.x) / (a2*p1p2.y + b2*p1p2.x))
+    val cp = Point(rx * p1p.y / ry, -ry*p1p.x / rx) * sign * sqrt((a2*b2 - a2*p1p2.y - b2*p1p2.x) / (a2*p1p2.y + b2*p1p2.x))
     // srodek elipsy po transformacji odwrotnej
     (cp rot rotation) + (end * 0.5)
   }
@@ -67,7 +66,7 @@ case class Arc(
    * be negative - it's sign describes range "direction".
    */
   private def angleInSignedRange(angle: Angle, rangeStart: Angle, rangeLength: Double) = {
-    val rangeEnd = Angle(normVal(rangeStart.value + rangeLength))
+    val rangeEnd = Angle(rangeStart.value + rangeLength)
     val (start, end) = if (rangeLength > 0) (rangeStart, Angle(rangeEnd)) else (Angle(rangeEnd), rangeStart)
     angle.between(start, end)
   }
@@ -92,7 +91,7 @@ case class Arc(
     val extrTs = Set(tau1, tau1.opposite)
     val (range_start, range_length, _) = ptToTauParam
     extrTs filter {angleInSignedRange(_, range_start, range_length)} map
-     {a => ptAtParam(a.normVal)}
+     {a => ptAtParam(a.value)}
   }
 
   /**
@@ -114,8 +113,8 @@ case class Arc(
     val extrTs = Set(tau1, tau1.opposite)
     val (range_start, range_length, _) = ptToTauParam
     extrTs filter {angleInSignedRange(_, range_start, range_length)} map
-     {a => ptAtParam(a.normVal)}
+     {a => ptAtParam(a.value)}
   }
 
-  override lazy val bounds = forPts(Set(ori, end) ++ extrX ++ extrY)
+  override lazy val bounds = Bounds.forPts(Set(ori, end) ++ extrX ++ extrY)
 }

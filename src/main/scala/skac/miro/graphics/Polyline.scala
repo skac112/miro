@@ -3,6 +3,7 @@ package skac.miro.graphics
 import skac.miro._
 import skac.miro.Graphic._
 import skac.miro.segments._
+import com.github.skac112.vgutils._
 
 /**
  * @author slawek

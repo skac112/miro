@@ -5,6 +5,7 @@ import Dsl._
 import graphics._
 import segments._
 import scala.collection.immutable._
+import com.github.skac112.vgutils._
 
 package object svgparse {
   type SegPair = (Option[Segment], Point)
@@ -260,7 +261,7 @@ package object svgparse {
     }
   }
 
-  def fromElem(elem: Elem): PosGraphic = {
+  def fromElem(elem: Elem): PosGraphic[Graphic] = {
     elem.label match {
       case "circle" => (C(doubleAttr(elem, "r")), Point(doubleAttr(elem, "cx"), doubleAttr(elem, "cy")))
       case "ellipse" => (E(doubleAttr(elem, "rx"), doubleAttr(elem, "ry")), Point(doubleAttr(elem, "cx"), doubleAttr(elem, "cy")))

@@ -1,7 +1,8 @@
 package skac.miro.segments
 
 import skac.miro._
-import skac.miro.transform._
+import com.github.skac112.vgutils.transform._
+import com.github.skac112.vgutils._
 
 trait Segment extends Curve {
   def doTransform(trans: Affine): Segment = this

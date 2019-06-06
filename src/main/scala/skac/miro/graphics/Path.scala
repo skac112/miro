@@ -2,6 +2,7 @@ package skac.miro.graphics
 
 import skac.miro._
 import skac.miro.Graphic._
+import com.github.skac112.vgutils._
 
 object Path {
   // def fromSegLine(segLine: GenericSegLine) = Path(Seq(segLine.segments), segLine.genericAttribs)

@@ -5,6 +5,7 @@ import skac.miro.graphics._
 import skac.miro.Graphic._
 import skac.miro.segments._
 import scala.math._
+import com.github.skac112.vgutils._
 
 /**
  * Pierscien kolowy.
@@ -43,6 +44,4 @@ case class Ring(rLow: Double, rHigh: Double, override val genericAttribs: Generi
     val new_w = scale * width
     copy(rLow = rMid - .5 * new_w, rHigh = rMid + .5 * new_w)
   }
-
-  override def bounds = super.bounds
 }

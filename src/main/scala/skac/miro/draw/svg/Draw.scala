@@ -7,20 +7,21 @@ import skac.miro.Graphic._
 import skac.miro.graphics._
 import skac.miro.attribs._
 import skac.miro.attribs.colors._
-import skac.miro.transform._
 import skac.miro.segments._
 import scala.math._
+import com.github.skac112.vgutils._
+import com.github.skac112.vgutils.transform._
 // import scalaz._
 
 /**
  * Zapisuje grafiki do SVG.
  */
 class Draw {
-  private def drawEl(g: PosGraphic): Option[XMLElem] = (g match {
+  private def drawEl(g: PosGraphic[Graphic]): Option[XMLElem] = (g match {
     case (skac.miro.graphics.Group(elements, ga), pt) => Some(<g transform={ s"translate(${pt.x}, ${pt.y})" }>{ for (el <- elements;
                                                      xml_elem <- drawEl(el))
                                                      yield xml_elem }</g>)
-    case (Line(e, _), pt) => Some(<line x1={ pt.x.toString } y1={ pt.y.toString } x2={ (pt + e).x.toString } y2={ (pt + e).y.toString }/>)
+    case (graphics.Line(e, _), pt) => Some(<line x1={ pt.x.toString } y1={ pt.y.toString } x2={ (pt + e).x.toString } y2={ (pt + e).y.toString }/>)
     case (Circle(r, _), pt) => Some(<circle r={ r.toString } cx={ pt.x.toString } cy={ pt.y.toString }/>)
     case (r @ Rect(w, h, rot, _), pt) => {
       val tl = r.tl + pt
@@ -43,7 +44,7 @@ class Draw {
     case _ => None
   }) map {xml_elem: XMLElem => checkAddGenAttrs(xml_elem , g._1.genericAttribs)}
 
-  def draw(g: PosGraphic) = {
+  def draw(g: PosGraphic[Graphic]) = {
     val b = bounds(g)
     val b_minx = b.tl.x
     val b_miny = b.tl.y
@@ -53,17 +54,17 @@ class Draw {
     <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox={ view_box } preserveAspectRatio="xMidYMid meet">{ drawEl(g).get }</svg>
   }
 
-  def saveToFile(g: PosGraphic, filename: String): Unit =
+  def saveToFile(g: PosGraphic[Graphic], filename: String): Unit =
     scala.xml.XML.save(filename, draw(g), "UTF-8", true, null)
 
-  def strDoc(g: PosGraphic): String = {
+  def strDoc(g: PosGraphic[Graphic]): String = {
     val elem = draw(g)
     val writer = new java.io.StringWriter()
     scala.xml.XML.write(writer, elem, "UTF-8", true, null)
     writer.toString
   }
 
-  def strEl(g: PosGraphic): Option[String] = drawEl(g) map {g_svg =>
+  def strEl(g: PosGraphic[Graphic]): Option[String] = drawEl(g) map {g_svg =>
     val writer = new java.io.StringWriter()
     scala.xml.XML.write(writer, g_svg, "UTF-8", true, null)
     writer.toString
@@ -78,7 +79,7 @@ class Draw {
   }
 
   private def fillToStr(fillO: Option[Fill]) = fillO match {
-    case Some(color: Color) => color.toString
+    case Some(color: MiroColor) => color.toString
     case _ => ""
   }
 
@@ -88,7 +89,7 @@ class Draw {
   }
 
   def checkAddFillAttrs(elem: XMLElem, fillO: Option[Fill]) = fillO match {
-    case Some(color: Color) => elem % new UnprefixedAttribute("fill", color.toString, Null)
+    case Some(color: MiroColor) => elem % new UnprefixedAttribute("fill", color.toString, Null)
     case _ => elem
   }
 
@@ -105,8 +106,8 @@ class Draw {
   }
 
   def checkAddFillOpacityAttr(elem: XMLElem, fillO: Option[Fill]) = fillO match {
-    case Some(Color(_, _, _, 1.0)) => elem
-    case Some(Color(_, _, _, op)) => elem % new UnprefixedAttribute("fill-opacity", op.toString, Null)
+    case Some(MiroColor(_, _, _, 1.0)) => elem
+    case Some(MiroColor(_, _, _, op)) => elem % new UnprefixedAttribute("fill-opacity", op.toString, Null)
     case _ => elem
   }
 
@@ -143,7 +144,7 @@ class Draw {
   }
 
   private def segToDStr(seg: Segment): String = seg match {
-    case LineSeg(end) => s"l ${seg.end.x} ${seg.end.y}"
+    case LineSeg(end) => s"l ${end.x} ${end.y}"
     case HSeg(len) => s"h $len"
     case VSeg(len) => s"v $len"
     case Arc(rx, ry, rotation, laf, sf, end) => s"a $rx $ry ${rotation.value} ${bool2Bit(laf)} ${bool2Bit(sf)} ${end.x},${end.y}"

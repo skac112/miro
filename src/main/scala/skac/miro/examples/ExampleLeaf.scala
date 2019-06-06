@@ -14,7 +14,7 @@ import scala.math._
  */
 object ExampleLeaf {
   def group = {
-    val ga = GenericAttribs(Some(Color.red()), None)
+    val ga = GenericAttribs(Some(MiroColor.red()), None)
     val leaf = Leaf((100.0, .0), 70.0, -10.0, ga)
     Group(leaf :: Nil)
   }

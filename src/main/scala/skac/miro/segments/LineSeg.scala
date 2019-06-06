@@ -1,8 +1,7 @@
 package skac.miro.segments
 
-import skac.miro.Point
-import skac.miro.transform._
 import skac.miro._
+import com.github.skac112.vgutils._
 
 /**
  * @author slawek

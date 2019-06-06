@@ -5,7 +5,8 @@ import skac.miro.graphics._
 import skac.miro.Graphic._
 import skac.miro.segments._
 import scala.math._
-import skac.miro.MathUtils._
+import com.github.skac112.vgutils._
+import com.github.skac112.vgutils.MathUtils._
 
 object Leaf {
   def uniform(pivot: Point, d: Double) = Leaf(pivot, d, d)
@@ -24,9 +25,9 @@ object Leaf {
  * @author slawek
  */
 case class Leaf(pivot: Point,
- d1: Double,
- d2: Double,
- override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
+                d1: Double,
+                d2: Double,
+                override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
   lazy val curve = new GenericSegCurve {
     override lazy val segments = List(a1, a2)
     override lazy val closed = true

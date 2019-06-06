@@ -2,6 +2,7 @@ package skac.miro.graphics
 import skac.miro._
 import skac.miro.Graphic._
 import scala.math._
+import com.github.skac112.vgutils._
 
 object Triangle {
   def equilateral(len: Double = 1.0, angle: Angle = Angle(0)) = Triangle(Point(len, 0) rot angle, Point(.5*len, .5*len*sqrt(3)) rot angle)
@@ -13,8 +14,8 @@ object Triangle {
  * Triangle. Default argument values generate unitary equilateral triangle.
  */
 case class Triangle(pt2: Point = Point(1, .0),
- pt3: Point = Point(.5, .5 * sqrt(3)),
- override val genericAttribs: GenericAttribs = defaultGenericAttribs)
+                    pt3: Point = Point(.5, .5 * sqrt(3)),
+                    override val genericAttribs: GenericAttribs = defaultGenericAttribs)
 extends GenericPolygon with Graphic {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
   override lazy val points = Seq(pt2, pt3)

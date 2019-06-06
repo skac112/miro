@@ -1,7 +1,8 @@
 package skac.miro.segments
 
 import skac.miro._
-import skac.miro.transform._
+import com.github.skac112.vgutils._
+import com.github.skac112.vgutils.transform._
 
 /**
  * Trait bazowy dla segmentu odcinkowego oraz segmentów odcinków pionowego i

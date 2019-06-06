@@ -1,5 +1,7 @@
 package skac.miro
 
+import com.github.skac112.vgutils._
+
 /**
  * Abstrakcyjna elipsa.
  * @author slawek
@@ -13,20 +15,20 @@ trait GenericEllipse extends Curve {
   /**
    * Polnocny kwadrant.
    */
-  // lazy val nq = (rx, -ry) rot rotation
+   lazy val nq: Point = (rx, -ry) rot rotation
 
   /**
    * Wschodni kwadrant.
    */
-  // lazy val eq = (rx, 0.0) rot rotation
+   lazy val eq = (rx, 0.0) rot rotation
 
   /**
    * Poludniowy kwadrant.
    */
-  // lazy val sq = (0.0, ry) rot rotation
+   lazy val sq = (0.0, ry) rot rotation
 
   /**
-   * Zachodni kwadrant rowny jest ori.
+   * Zachodni kwadrant.
    */
-  // lazy val wq = ori
+   lazy val wq = (-rx, 0.0) rot rotation
 }

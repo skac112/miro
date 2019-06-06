@@ -2,6 +2,7 @@ package skac.miro
 
 import skac.miro.graphics.Path
 import skac.miro.segments._
+import com.github.skac112.vgutils._
 /**
  * @author slawek
  */
