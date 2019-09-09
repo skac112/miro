@@ -17,18 +17,30 @@ object DirectedStripe {
 }
 
 /**
-  * Wycinek pierscienia kolowego (wstega lukowa).
+  * Section of an sircle ring (arc stripe). Can have positive or negative curvature.
   */
 case class DirectedStripe(width: Double,
                           length: Double,
                           curvature: Double,
                           sa: Angle,
-                          override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
+                          override val genericAttribs: GenericAttribs = defaultGenericAttribs)
+  extends GenericPath {
+
   lazy val curve = new GenericSegCurve {
     override lazy val segments = s1 :: a1 :: s2 :: a2 :: Nil
     override lazy val closed = true }
 
   override lazy val subpaths: Subpaths = Seq((curve, ori))
+
+  /**
+    * Circle center (relative to  (0, 0) - i.e. start of first line section) - if a stripe is not a rectangle
+    * (curvature != 0.0)
+    */
+  lazy val cO = curvature match {
+    case c if c > 0.0 => Some(new Point(r2O.get, sa))
+    case c if c < 0.0 => Some(new Point(r2O.get, sa.opposite))
+    case _ => None
+  }
 
   /**
     * Poczatek 1-go odcinka.
