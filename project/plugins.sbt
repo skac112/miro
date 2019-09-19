@@ -1,2 +1,2 @@
-// addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.8")
-// addSbtPlugin("com.artima.supersafe" % "sbtplugin" % "1.1.0-RC6")
+addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject"  % "0.6.1")
+addSbtPlugin("org.scala-js"  % "sbt-scalajs"  % "0.6.28")
