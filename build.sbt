@@ -2,7 +2,7 @@ import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
 val sharedSettings = Seq(
   name := "miro",
-  version := "1.0.6-SNAPSHOT",
+  version := "1.0.7-SNAPSHOT",
   organization := "skac112",
   scalaVersion := "2.12.8",
   libraryDependencies += "skac112" %%% "vgutils" % "0.1.0-SNAPSHOT",
@@ -20,7 +20,7 @@ val jvmSettings = Seq(
 )
 
 val jsSettings = Seq(
-
+  libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.4.2",
 )
 
 lazy val miro = crossProject(JSPlatform, JVMPlatform)

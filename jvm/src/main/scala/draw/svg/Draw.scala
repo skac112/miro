@@ -17,7 +17,9 @@ import com.github.skac112.vgutils.transform._
 import com.github.skac112.miro.Graphic
 import com.github.skac112.miro.attribs.{Fill, Stroke}
 import com.github.skac112.miro.attribs.colors.MiroColor
-import com.github.skac112.miro.graphics.{Circle, GenericPath, Quad, Rect, Square, Triangle}
+import com.github.skac112.miro.graphics._
+import com.github.skac112.miro.SvgUtils._
+
 import com.github.skac112.miro.segments.{Arc, Cubic, HSeg, LineSeg, Quadratic, Segment, SmoothCubic, SmoothQuadratic, VSeg}
 // import scalaz._
 
@@ -132,38 +134,5 @@ class Draw {
     XMLElem(elem.prefix, elem.label, elem.attributes, elem.scope, elem.child ++ childNode : _*)
   }
 
-  /**
-   * Zwraca wartosc atrybutu "d" sciezki
-   */
-  private def pathDAttr(subpaths: Subpaths, pt: Point): String =
-    (subpaths.foldLeft("") {(curr: String, segs: Subpath) => {
-      curr + subpathToDStr(segs, pt) + " "
-    }}).trim
 
-  private def pointsAttr(points: Points, pt: Point): String =
-   (ori +: points) map {_ + pt} map {pt => s"${pt.x},${pt.y}"} reduceLeft {_ + " " + _}
-
-  // TODO! uzupelnic
-  private def subpathToDStr(subpath: Subpath, pt: Point): String = {
-    val start_pt = subpath._2 + pt
-    subpath._1.segments.foldLeft(s"M ${start_pt.x},${start_pt.y}") {(curr: String, seg: Segment) => {
-      curr + " " + segToDStr(seg)
-    }} + " z"
-  }
-
-  private def segToDStr(seg: Segment): String = seg match {
-    case LineSeg(end) => s"l ${end.x} ${end.y}"
-    case HSeg(len) => s"h $len"
-    case VSeg(len) => s"v $len"
-    case Arc(rx, ry, rotation, laf, sf, end) => s"a $rx $ry ${rotation.value} ${bool2Bit(laf)} ${bool2Bit(sf)} ${end.x},${end.y}"
-    case Quadratic(cp, end) => s"q ${cp.x},${cp.y} ${end.x},${end.y}"
-    case SmoothQuadratic(end) => s"t ${end.x},${end.y}"
-    case Cubic(cp1, cp2, end) => s"c ${cp1.x},${cp1.y} ${cp2.x},${cp2.y} ${end.x},${end.y}"
-    case SmoothCubic(cp2, end) => s"s ${cp2.x},${cp2.y} ${end.x},${end.y}"
-  }
-
-  private def bool2Bit(b: Boolean): String = b match {
-    case true => "1"
-    case _ => "0"
-  }
 }
