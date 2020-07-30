@@ -61,4 +61,5 @@ trait GenericRect extends GenericPolygon {
 
   override lazy val len = 2 * width + 2 * height
   override def bounds = Bounds.forPts(Set(tl, tr, bl, br))
+
 }

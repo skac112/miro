@@ -4,7 +4,7 @@ import com.github.skac112.miro.Graphic
 import com.github.skac112.miro.Graphic._
 import com.github.skac112.miro.GenericPolygon
 import com.github.skac112.miro.GenericRect
-import com.github.skac112.vgutils.ori
+import com.github.skac112.vgutils.{Point, ori}
 
 //object Rect {
 //  def unapply(rect: Rect) = Some((rect.width, rect.height, rect.genericAttribs))
@@ -37,4 +37,9 @@ extends GenericRect with Graphic {
 
   // TODO: uzupelnic !!!
   override def apply(t: Double) = ori
+
+  override def hitTest(pt: Point) = {
+    val rot_pt = pt.rot(-rotation)
+    Some(rot_pt.x >= 0 && rot_pt.x <= width && rot_pt.y >= 0 && rot_pt.y <= height)
+  }
 }
