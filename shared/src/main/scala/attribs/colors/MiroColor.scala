@@ -71,8 +71,8 @@ class MiroColor(r: Double, g: Double, b: Double, a: Double = 1.0)
     hex2double(webStr.substring(2, 4)),
     hex2double(webStr.substring(4, 6)))
 
-  override def +:(other: Color): MiroColor = super.+:(other)
-  override def -:(other: Color): MiroColor = super.-:(other)
+//  override def +:(other: Color): MiroColor = super.+:(other)
+//  override def -:(other: Color): MiroColor = super.-:(other)
   override def addR(v: Double = 1.0): MiroColor = super.addR(v)
   override def addG(v: Double = 1.0): MiroColor = super.addG(v)
   override def addB(v: Double = 1.0): MiroColor = super.addB(v)

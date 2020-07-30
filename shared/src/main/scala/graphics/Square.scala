@@ -15,7 +15,7 @@ extends GenericRect with Graphic {
   override val height = size
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 
-  override def cp(code: Symbol) = code match {
+  override def characteristicPt(code: Symbol) = code match {
     case 'TL => tl
     case 'TR => tr
     case 'BL => bl
@@ -25,6 +25,6 @@ extends GenericRect with Graphic {
     case 'B => b
     case 'L => l
     case 'C => c
-    case _ => super.cp(code)
+    case _ => super.characteristicPt(code)
   }
 }

@@ -12,7 +12,7 @@ package object miro {
   type Ensemble = Seq[PosGraphic[Graphic]]
   type SegEnsemble = Seq[Segment]
   type MiroTransform = PosGraphic[Graphic] => PosGraphic[Graphic]
-  type Points = Seq[Point]
+//  type Points = Seq[Point]
   type Subpath = (GenericSegCurve, Point)
   type Subpaths = Seq[Subpath]
   type PtSet = Set[Point]
@@ -30,7 +30,7 @@ package object miro {
   }
 
   implicit def graphicToPosGraphic[G <: Graphic](graphic: G) = (graphic, ori)
-  implicit def posGraphicTpGraphic[G <: Graphic](posGraphic: PosGraphic[G]): G = posGraphic._1
+  implicit def posGraphicToGraphic[G <: Graphic](posGraphic: PosGraphic[G]): G = posGraphic._1
   implicit def posGraphicToRichPosGraphic[G <: Graphic](posGraphic: PosGraphic[G]) = RichPosGraphic[G](posGraphic)
   implicit def richPosGraphicToPosGraphic[G <: Graphic](rpg: RichPosGraphic[G]) = rpg.pg
   implicit def stringToCol(webStr: String) = new MiroColor(webStr)

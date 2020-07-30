@@ -11,5 +11,6 @@ package object align {
     */
   type AlignFun = (Graphic, Graphic) => Point
 
-  def joining(cp1: Symbol, cp2: Symbol): AlignFun = (g1: Graphic, g2: Graphic) => g1.cp(cp1) - g2.cp(cp2)
+  def joining(cp1: Symbol, cp2: Symbol): AlignFun = (g1: Graphic, g2: Graphic) =>
+    g1.characteristicPt(cp1) - g2.characteristicPt(cp2)
 }

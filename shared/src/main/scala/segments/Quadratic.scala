@@ -8,9 +8,6 @@ import com.github.skac112.vgutils._
  * @author slawek
  */
 case class Quadratic(cp: Point, override val end: Point) extends GenericQuadratic(end) {
-  // TODO: uzupelnic!
-  override def ptAt(arcLen: Double) = ori
-
   // we use state monad to perform adding points to set
   def addPt(pt: Point) = State[PtSet, Unit] {
     case points => (points + pt, ())

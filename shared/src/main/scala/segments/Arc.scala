@@ -25,11 +25,11 @@ case class Arc(
   override val end: Point)
   extends Segment {
 
-  override def ptAt(arcLen: Double) = {
+  override def pn(l: Double) = {
     val (init_tau, init_delta_tau, cen) = MathUtils.EllipseCalc.ptToTauParam(ori, end, rx, ry, rotation, largeArcFlag, sweepFlag)
     val init_arclen = MathUtils.EllipseCalc.tauToArcLen(init_tau, rx, ry, sweepFlag)
     val f_arc_len_tau = MathUtils.EllipseCalc.arcLenToTauF(rx, ry, sweepFlag)
-    val tau = f_arc_len_tau(init_arclen + arcLen)
+    val tau = f_arc_len_tau(init_arclen + l)
     (tauVec(tau) rot rotation) + cen
   }
 
@@ -40,7 +40,7 @@ case class Arc(
    */
   private def tauVec(tau: Double) = Point(rx*cos(tau), ry*sin(tau))
 
-  def ptAtParam(t: Double) = (tauVec(t) rot rotation) + c
+  override def apply(t: Double) = (tauVec(t) rot rotation) + c
 
   lazy val c = calcCen
 
@@ -91,7 +91,7 @@ case class Arc(
     val extrTs = Set(tau1, tau1.opposite)
     val (range_start, range_length, _) = ptToTauParam
     extrTs filter {angleInSignedRange(_, range_start, range_length)} map
-     {a => ptAtParam(a.value)}
+     {a => apply(a.value)}
   }
 
   /**
@@ -113,7 +113,7 @@ case class Arc(
     val extrTs = Set(tau1, tau1.opposite)
     val (range_start, range_length, _) = ptToTauParam
     extrTs filter {angleInSignedRange(_, range_start, range_length)} map
-     {a => ptAtParam(a.value)}
+     {a => apply(a.value)}
   }
 
   override lazy val bounds = Bounds.forPts(Set(ori, end) ++ extrX ++ extrY)

@@ -38,12 +38,15 @@ case class Circle(r: Double = 1.0,
 
   override lazy val bounds = Bounds((-r, -r), (r, r))
 
-  override def cp(code: Symbol) = code match {
+  override def characteristicPt(code: Symbol) = code match {
     case 'NQ => nq
     case 'SQ => sq
     case 'EQ => eq
     case 'WQ => wq
     case 'C => ori
-    case _ => super.cp(code)
+    case _ => super.characteristicPt(code)
   }
+
+  // TODO: uzupelnic !!!
+  override def apply(t: Double) = ori
 }

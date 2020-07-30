@@ -31,4 +31,7 @@ trait GenericEllipse extends Curve {
    * Zachodni kwadrant.
    */
    lazy val wq = (-rx, 0.0) rot rotation
+
+  // TODO: uzupelnic !!!
+  override def apply(t: Double) = ori
 }

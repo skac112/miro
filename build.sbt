@@ -5,7 +5,8 @@ val sharedSettings = Seq(
   version := "1.0.7-SNAPSHOT",
   organization := "skac112",
   scalaVersion := "2.12.8",
-  libraryDependencies += "skac112" %%% "vgutils" % "0.1.0-SNAPSHOT",
+  libraryDependencies += "skac112" %%% "vgutils" % "0.1.3-SNAPSHOT",
+  libraryDependencies += "skac112" %%% "gauguin" % "0.1.0-SNAPSHOT",
   libraryDependencies += "org.typelevel" %%% "cats-core" % "1.2.0",
   libraryDependencies += "com.lihaoyi" %%% "scalatags" % "0.7.0"
 )

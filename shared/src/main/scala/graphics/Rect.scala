@@ -4,6 +4,7 @@ import com.github.skac112.miro.Graphic
 import com.github.skac112.miro.Graphic._
 import com.github.skac112.miro.GenericPolygon
 import com.github.skac112.miro.GenericRect
+import com.github.skac112.vgutils.ori
 
 //object Rect {
 //  def unapply(rect: Rect) = Some((rect.width, rect.height, rect.genericAttribs))
@@ -21,7 +22,7 @@ case class Rect(
 extends GenericRect with Graphic {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 
-  override def cp(code: Symbol) = code match {
+  override def characteristicPt(code: Symbol) = code match {
     case 'TL => tl
     case 'TR => tr
     case 'BL => bl
@@ -31,6 +32,9 @@ extends GenericRect with Graphic {
     case 'B => b
     case 'L => l
     case 'C => c
-    case _ => super.cp(code)
+    case _ => super.characteristicPt(code)
   }
+
+  // TODO: uzupelnic !!!
+  override def apply(t: Double) = ori
 }

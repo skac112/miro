@@ -4,6 +4,7 @@ import com.github.skac112.miro.{Subpath, Subpaths}
 import com.github.skac112.miro.segments._
 import com.github.skac112.vgutils.{Point, Points}
 import com.github.skac112.vgutils._
+import scala.math._
 
 object SvgUtils {
   /**
@@ -29,7 +30,7 @@ object SvgUtils {
     case LineSeg(end) => s"l ${end.x} ${end.y}"
     case HSeg(len) => s"h $len"
     case VSeg(len) => s"v $len"
-    case Arc(rx, ry, rotation, laf, sf, end) => s"a $rx $ry ${rotation.value} ${bool2Bit(laf)} ${bool2Bit(sf)} ${end.x},${end.y}"
+    case Arc(rx, ry, rotation, laf, sf, end) => s"a $rx $ry ${rotation.value * 180 / Pi} ${bool2Bit(laf)} ${bool2Bit(sf)} ${end.x},${end.y}"
     case Quadratic(cp, end) => s"q ${cp.x},${cp.y} ${end.x},${end.y}"
     case SmoothQuadratic(end) => s"t ${end.x},${end.y}"
     case Cubic(cp1, cp2, end) => s"c ${cp1.x},${cp1.y} ${cp2.x},${cp2.y} ${end.x},${end.y}"

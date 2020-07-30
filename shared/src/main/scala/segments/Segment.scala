@@ -9,4 +9,7 @@ trait Segment extends Curve {
   def t(trans: Affine) = doTransform(trans: Affine)
   def r(angle: Double) = doTransform(Rotation(angle))
   def bounds = Bounds.empty
+
+  // TODO: uzupelnic !!!
+  override def apply(t: Double) = ori
 }

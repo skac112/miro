@@ -24,6 +24,8 @@ trait GenericSegCurve extends Curve {
     case ((curr_b, curr_p), seg) => (curr_b + (seg.bounds move curr_p), curr_p + seg.end)
   }._1
 
+  // TODO: uzupelnic !!!
+  override def apply(t: Double) = ori
   /**
    * Zwraca sciezke powstala przez dodanie do tej sciezki segmentu bedacego wynikiem dzialania funkcji transFun
    * na ostatni segment biezacej sciezki

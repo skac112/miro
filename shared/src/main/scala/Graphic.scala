@@ -131,7 +131,7 @@ trait Graphic {
   def toT: Triangle = this.asInstanceOf[Triangle]
   def toQ: Quad = this.asInstanceOf[Quad]
 
-  def cp(code: Symbol): Point = code match {
+  def characteristicPt(code: Symbol): Point = code match {
     case 'ORIG => Point(0, 0)
   }
 
@@ -139,4 +139,15 @@ trait Graphic {
   def alignTo(g: Graphic) = Align(g, this)
   def alignSelf = Align(this, this)
   def addAlign(g: Graphic) = AddAlign(this, g)
+
+  /**
+   * Determines if a given point lies on a graphic. Returns None by default, meaning that
+   * it is unknown if a given point lies on a graphic.
+   * @param pt
+   * @return
+   */
+  def hitTest(pt: Point): Option[Boolean] = if (bounds.hitTest(pt)) {
+    None
+  }
+  else Some(false)
 }
