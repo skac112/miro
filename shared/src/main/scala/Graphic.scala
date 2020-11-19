@@ -149,5 +149,7 @@ trait Graphic {
   def hitTest(pt: Point): Option[Boolean] = if (bounds.hitTest(pt)) {
     None
   }
-  else Some(false)
+  else {
+    Some(false)
+  }
 }

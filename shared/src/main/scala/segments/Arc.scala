@@ -9,6 +9,12 @@ object Arc {
    * Returns circular arc - rx and ry are equal and rotation is meaningless
    */
   def circ(r: Double, laf: Boolean, sf: Boolean, end: Point) = Arc(r, r, .0, laf, sf, end)
+
+  def circ(c: Point, r: Double, startAngle: Angle, angleIncrease: Double) = {
+    lazy val large_arc_flag = abs(angleIncrease) > Pi
+    lazy val sweep_flag = angleIncrease > 0.0
+    circ(r, large_arc_flag, sweep_flag, c + Point.withAngle(startAngle + angleIncrease, r))
+  }
 }
 
 /**
