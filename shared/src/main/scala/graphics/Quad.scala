@@ -40,11 +40,11 @@ object Quad {
   def fromSides = ???
 }
 
-case class Quad(v2: Point = Point(1, 0),
+case class Quad[+D](v2: Point = Point(1, 0),
                 v3: Point = Point(1, 1),
                 v4: Point = Point(0, 1),
                 override val genericAttribs: GenericAttribs = defaultGenericAttribs)
-extends GenericPolygon with Graphic {
+extends GenericPolygon with Graphic[D] {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
   override lazy val points = Seq(v2, v3, v4)
 }

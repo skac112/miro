@@ -14,12 +14,12 @@ import com.github.skac112.vgutils.{Point, ori}
  * Rectangle.
  * @author slawek
  */
-case class Rect(
+case class Rect[+D](
   override val width: Double = 1.0,
   override val height: Double = 1.0,
   override val rotation: Double = 0.0,
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
-extends GenericRect with Graphic {
+extends GenericRect with Graphic[D] {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 
   override def characteristicPt(code: Symbol) = code match {

@@ -9,11 +9,11 @@ import com.github.skac112.vgutils._
 /**
  * @author slawek
  */
-case class Line(
+case class Line[+D](
                  override val end: Point = Point(1, 0),
                  override val genericAttribs: GenericAttribs = defaultGenericAttribs)
-extends Graphic with GenericLine {
-  override def doTransform(trans: MiroTransform): Graphic = trans match {
+extends Graphic[D] with GenericLine {
+  override def doTransform(trans: MiroTransform): Graphic[D] = trans match {
     case aff: Affine => Line(aff.transPt(end), genericAttribs)
     case _ => this
   }

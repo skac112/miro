@@ -260,7 +260,7 @@ package object svgparse {
     }
   }
 
-  def fromElem(elem: Elem): PosGraphic[Graphic] = {
+  def fromElem(elem: Elem): PosGraphic[Graphic[_], _] = {
     elem.label match {
       case "circle" => (C(doubleAttr(elem, "r")), Point(doubleAttr(elem, "cx"), doubleAttr(elem, "cy")))
       case "ellipse" => (E(doubleAttr(elem, "rx"), doubleAttr(elem, "ry")), Point(doubleAttr(elem, "cx"), doubleAttr(elem, "cy")))

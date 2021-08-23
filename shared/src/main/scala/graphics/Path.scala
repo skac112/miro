@@ -18,8 +18,8 @@ object Path {
  * Implementacja interfejsu Path odpowiadajaca elementowi Path w SVG.
  * @author slawek
  */
-case class Path(override val subpaths: Subpaths,
+case class Path[+D](override val subpaths: Subpaths,
  override val genericAttribs: GenericAttribs = defaultGenericAttribs)
-extends GenericPath {
+extends GenericPath[D] {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

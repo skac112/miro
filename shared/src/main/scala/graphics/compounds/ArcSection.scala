@@ -13,7 +13,7 @@ import com.github.skac112.vgutils._
  * @param ar angle range
  * @author slawek
  */
-case class ArcSection(r: Double, sa: Angle, ar: Angle, override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
+case class ArcSection[+D](r: Double, sa: Angle, ar: Angle, override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath[D] {
   lazy val curve = new GenericSegCurve {
     override lazy val segments = s1 :: ha :: s2 :: Nil
     override lazy val closed = true

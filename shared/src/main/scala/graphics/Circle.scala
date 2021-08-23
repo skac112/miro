@@ -10,9 +10,10 @@ object Circle {
 /**
  * @author slawek
  */
-case class Circle(r: Double = 1.0,
-  override val genericAttribs: GenericAttribs = defaultGenericAttribs)
-  extends GenericEllipse with Graphic {
+case class Circle[+D](r: Double = 1.0,
+  override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+  override val metadataO: Option[D] = None)
+  extends GenericEllipse with Graphic[D] {
   // type T = this.type
   override val rx = r
   override val ry = r
@@ -28,11 +29,11 @@ case class Circle(r: Double = 1.0,
    * odp. okregow zadanych - czy szukany okrag ma zawierac w sobie czy nie
    * dany okrag styczny.
    */
-  def tanTo2c(c1: PosGraphic[Circle], c2: PosGraphic[Circle], loc1: Boolean, loc2: Boolean): Set[PosGraphic[Circle]] = {
+  def tanTo2c(c1: PosGraphic[Circle[_], _], c2: PosGraphic[Circle[_], _], loc1: Boolean, loc2: Boolean): Set[PosGraphic[Circle[_], _]] = {
     MathUtils.cTanTo2c(c1._2.x, c1._2.y,
      c1._1.r, loc1, c2._2.x, c2._2.y,
      c2._1.r, loc2, r) map {kv =>
-      (Circle(r = this.r, genericAttribs = this.genericAttribs), Point(kv._1, kv._2))
+      (Circle[D](r = this.r, genericAttribs = this.genericAttribs), Point(kv._1, kv._2))
     }
   }
 

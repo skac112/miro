@@ -11,16 +11,19 @@ object Group {
 /**
  * @author slawek
  */
-case class Group(elements: Ensemble, override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends Graphic {
+case class Group[+D](
+                     elements: Ensemble[Graphic[Any], Any],
+                     override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+                     override val metadataO: Option[D] = None) extends Graphic[D] {
 
   /**
    * Tworzy nowa grupe przez dodanie do biezacej grupy elementu powstalego przez transformacje ostatniego elementu
    * tej grupy (z uwzglednieniem przesuniecia).
    */
-  def onLast(trans: MiroTransform) = {
-    val new_pos_graph = trans(elements.last)
-    Group(elements :+ new_pos_graph, genericAttribs)
-  }
+//  def onLast(trans: MiroTransform) = {
+//    val new_pos_graph = trans(elements.last)
+//    Group(elements :+ new_pos_graph, genericAttribs)
+//  }
 
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 

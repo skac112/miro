@@ -8,9 +8,9 @@ import com.github.skac112.vgutils._
 /**
  * @author slawek
  */
-case class Polyline(points: Points,
+case class Polyline[+D](points: Points,
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
-extends GenericSegCurve with Graphic {
+extends GenericSegCurve with Graphic[D] {
   override def segments = ((ori +: points.view).sliding(2) map {
     pts2 => LineSeg(pts2(1) - pts2(0))}).toSeq
 

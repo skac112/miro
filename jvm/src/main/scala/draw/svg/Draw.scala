@@ -27,12 +27,12 @@ import com.github.skac112.miro.segments.{Arc, Cubic, HSeg, LineSeg, Quadratic, S
  * Zapisuje grafiki do SVG.
  */
 class Draw {
-  private def drawEl(g: PosGraphic[Graphic]): Option[XMLElem] = (g match {
-    case (com.github.skac112.miro.graphics.Group(elements, ga), pt) => Some(<g transform={ s"translate(${pt.x}, ${pt.y})" }>{ for (el <- elements;
+  private def drawEl(g: PosGraphic[Graphic[_], _]): Option[XMLElem] = (g match {
+    case (com.github.skac112.miro.graphics.Group(elements, ga, _), pt) => Some(<g transform={ s"translate(${pt.x}, ${pt.y})" }>{ for (el <- elements;
                                                                                                                 xml_elem <- drawEl(el))
                                                      yield xml_elem }</g>)
-    case (miro.graphics.Line(e, _), pt) => Some(<line x1={ pt.x.toString } y1={ pt.y.toString } x2={ (pt + e).x.toString } y2={ (pt + e).y.toString }/>)
-    case (Circle(r, _), pt) => Some(<circle r={ r.toString } cx={ pt.x.toString } cy={ pt.y.toString }/>)
+    case (miro.graphics.Line(e, _), pt @ Point(x, y)) => Some(<line x1={ x.toString } y1={ y.toString } x2={ (x + e.x).toString } y2={ (y + e.y).toString }/>)
+    case (Circle(r, _, _), Point(x, y)) => Some(<circle r={ r.toString } cx={ x.toString } cy={ y.toString }/>)
     case (r @ Rect(w, h, rot, _), pt) => {
       val tl = r.tl + pt
       // conversion to degrees
@@ -48,13 +48,13 @@ class Draw {
       Some(<rect x={ tl.x.toString } y={ tl.y.toString} width={ size.toString } height={ size.toString } transform={ rot_str }/>)
     }
     // case (Path(subpaths, _), pt) => Some(<path d="{ pathDAttr(subpaths, pt) }"/>)
-    case (p: GenericPath, pt) => Some(<path d={ pathDAttr(p.subpaths, pt) }/>)
-    case (t @ Triangle(p2, p3, ga), pt) => Some(<polygon points={ pointsAttr(t.points, pt)}/>)
+    case (p: GenericPath[_], pt) => Some(<path d={ pathDAttr(p.subpaths, pt) }/>)
+    case (t @ Triangle(_, _, _, _), pt @ Point(_, _)) => Some(<polygon points={ pointsAttr(t.points, pt)}/>)
     case (q @ Quad(p2, p3, p4, ga), pt) => Some(<polygon points={ pointsAttr(q.points, pt)}/>)
     case _ => None
   }) map {xml_elem: XMLElem => checkAddGenAttrs(xml_elem , g._1.genericAttribs)}
 
-  def draw(g: PosGraphic[Graphic]) = {
+  def draw(g: PosGraphic[Graphic[_], _]) = {
     val b = bounds(g)
     val b_minx = b.tl.x
     val b_miny = b.tl.y
@@ -64,17 +64,17 @@ class Draw {
     <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox={ view_box } preserveAspectRatio="xMidYMid meet">{ drawEl(g).get }</svg>
   }
 
-  def saveToFile(g: PosGraphic[Graphic], filename: String): Unit =
+  def saveToFile(g: PosGraphic[Graphic[_], _], filename: String): Unit =
     scala.xml.XML.save(filename, draw(g), "UTF-8", true, null)
 
-  def strDoc(g: PosGraphic[Graphic]): String = {
+  def strDoc(g: PosGraphic[Graphic[_], _]): String = {
     val elem = draw(g)
     val writer = new java.io.StringWriter()
     scala.xml.XML.write(writer, elem, "UTF-8", true, null)
     writer.toString
   }
 
-  def strEl(g: PosGraphic[Graphic]): Option[String] = drawEl(g) map {g_svg =>
+  def strEl(g: PosGraphic[Graphic[_], _]): Option[String] = drawEl(g) map {g_svg =>
     val writer = new java.io.StringWriter()
     scala.xml.XML.write(writer, g_svg, "UTF-8", true, null)
     writer.toString

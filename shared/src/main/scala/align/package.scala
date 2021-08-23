@@ -9,8 +9,8 @@ package object align {
     * a posgraphic made of a second graphic and the calculated point aligns to graphic given in first
     * argument.
     */
-  type AlignFun = (Graphic, Graphic) => Point
+  type AlignFun[G <: Graphic[_]] = (Graphic[_], G) => Point
 
-  def joining(cp1: Symbol, cp2: Symbol): AlignFun = (g1: Graphic, g2: Graphic) =>
+  def joining[G <: Graphic[_]](cp1: Symbol, cp2: Symbol): AlignFun[G] = (g1: Graphic[_], g2: G) =>
     g1.characteristicPt(cp1) - g2.characteristicPt(cp2)
 }

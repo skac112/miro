@@ -7,10 +7,10 @@ import com.github.skac112.miro._
 /**
  * @author slawek
  */
-case class Square(size: Double = 1.0,
+case class Square[+D](size: Double = 1.0,
   override val rotation: Double = 0.0,
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
-extends GenericRect with Graphic {
+extends GenericRect with Graphic[D] {
   override val width = size
   override val height = size
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)

@@ -12,8 +12,8 @@ import scala.math._
 import com.github.skac112.miro.SvgUtils._
 
 class Draw {
-  private def drawEl(g: PosGraphic[Graphic]): Option[VdomArray] = (g match {
-    case (com.github.skac112.miro.graphics.Group(elements, ga), pt) => {
+  private def drawEl(g: PosGraphic[Graphic[_], _]): Option[VdomArray] = (g match {
+    case (com.github.skac112.miro.graphics.Group(elements, _, _), pt) => {
       val elems = elements flatten drawEl _
       Some(svg_<^.<.g(svg_<^.^.transform := s"translate(${pt.x}, ${pt.y})")(elems: _*))
     }
@@ -24,7 +24,7 @@ class Draw {
       svg_<^.^.x2 := (pt + e).x.toString,
       svg_<^.^.y2 := (pt + e).y.toString))
 
-    case (Circle(r, _), pt) => Some(svg_<^.<.circle(
+    case (Circle(r, _, _), pt) => Some(svg_<^.<.circle(
       svg_<^.^.r := r.toString,
       svg_<^.^.cx := pt.x.toString,
       svg_<^.^.cy := pt.y.toString))
@@ -55,8 +55,8 @@ class Draw {
         svg_<^.^.transform := rot_str))
     }
 
-    case (p: GenericPath, pt) => Some(svg_<^.<.path(svg_<^.^.d := pathDAttr(p.subpaths, pt)))
-    case (t @ Triangle(p2, p3, ga), pt) => Some(svg_<^.<.polygon(svg_<^.^.points := pointsAttr(t.points, pt)))
+    case (p: GenericPath[_], pt) => Some(svg_<^.<.path(svg_<^.^.d := pathDAttr(p.subpaths, pt)))
+    case (t @ Triangle(p2, p3, ga, _), pt) => Some(svg_<^.<.polygon(svg_<^.^.points := pointsAttr(t.points, pt)))
     case (q @ Quad(p2, p3, p4, ga), pt) => Some(svg_<^.<.polygon(svg_<^.^.points := pointsAttr(q.points, pt)))
     case _ => None
   }) map {elem: VdomTag => VdomArray.apply(checkAddGenAttrs(elem , g._1.genericAttribs))}

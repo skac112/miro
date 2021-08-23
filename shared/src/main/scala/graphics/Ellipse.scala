@@ -13,12 +13,12 @@ import com.github.skac112.vgutils._
  * Elipsa. Polozenie srodka ma znaczenie tylko wewnątrz grupy, więc nie jest częścią danych obiektu.
  * @author slawek
  */
-case class Ellipse(
+case class Ellipse[+D](
   override val rx: Double = 1.0,
   override val ry: Double = 1.0,
   override val rotation: Double = 0.0,
   override val genericAttribs: GenericAttribs = defaultGenericAttribs)
-extends GenericEllipse with Graphic {
+extends GenericEllipse with Graphic[D] {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 
   override def bounds: Bounds = ???

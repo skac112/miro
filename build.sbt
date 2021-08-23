@@ -2,7 +2,7 @@ import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
 val sharedSettings = Seq(
   name := "miro",
-  version := "1.0.7-SNAPSHOT",
+  version := "1.1.0-SNAPSHOT",
   organization := "skac112",
   scalaVersion := "2.12.8",
   libraryDependencies += "skac112" %%% "vgutils" % "0.1.4-SNAPSHOT",

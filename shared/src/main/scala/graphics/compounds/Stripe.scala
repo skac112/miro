@@ -10,7 +10,7 @@ import com.github.skac112.vgutils._
 import com.github.skac112.miro.graphics.GenericPath
 
 object Stripe {
-  def scaleWidth(pStripe: PosGraphic[Stripe], scale: Double) = {
+  def scaleWidth[D](pStripe: PosGraphic[Stripe[D], D], scale: Double) = {
     val (st, pt) = pStripe
     val new_st = st scaleWidth scale
     val trans_v = new Point((st.width - new_st.width) * .5, st.sa)
@@ -24,11 +24,11 @@ object Stripe {
  * ar - angle range
  * @author slawek
  */
-case class Stripe(rLow: Double,
+case class Stripe[+D](rLow: Double,
  rHigh: Double,
  sa: Angle,
  ar: Angle,
- override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
+ override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath[D] {
   lazy val curve = new GenericSegCurve {
     override lazy val segments = s1 :: ha :: s2 :: la :: Nil
     override lazy val closed = true }

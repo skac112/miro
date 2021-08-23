@@ -8,7 +8,7 @@ import com.github.skac112.vgutils._
  * Implementacja interfejsu Path odpowiadajaca elementowi Path w SVG.
  * @author slawek
  */
-trait GenericPath extends Graphic {
+trait GenericPath[+D] extends Graphic[D] {
   def subpaths: Subpaths
   def +(subpath: GenericSegCurve, transl: Point) = Path(subpaths :+ (subpath, transl), genericAttribs)
   override def bounds = subpathsBounds(subpaths)

@@ -7,6 +7,8 @@ import com.github.skac112.miro.attribs._
 import com.github.skac112.miro.attribs.colors._
 import com.github.skac112.miro._
 import com.github.skac112.miro.graphics.compounds._
+import com.github.skac112.vgutils.Point
+
 import scala.math._
 
 /**
@@ -15,7 +17,7 @@ import scala.math._
 object SimpleShapes4 {
   def group = {
     val ga = GenericAttribs(Some(MiroColor.red()), None)
-    val ring = ArcSection(50, 0, 0.25 * Pi, ga)
-    Group(ring :: Nil)
+    val ring = (ArcSection[Any](50, 0, 0.25 * Pi, ga), Point(0.0, 0.0))
+    Group(Seq[PosGraphic[Graphic[Any], Any]](ring))
   }
 }

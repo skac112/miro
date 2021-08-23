@@ -8,7 +8,7 @@ import com.github.skac112.miro.graphics._
 import com.github.skac112.vgutils._
 
 object DirectedStripe {
-  def scaleWidth(pStripe: PosGraphic[Stripe], scale: Double) = {
+  def scaleWidth[D](pStripe: PosGraphic[Stripe[D], D], scale: Double) = {
     val (st, pt) = pStripe
     val new_st = st scaleWidth scale
     val trans_v = new Point((st.width - new_st.width) * .5, st.sa)
@@ -19,12 +19,12 @@ object DirectedStripe {
 /**
   * Section of an sircle ring (arc stripe). Can have positive or negative curvature.
   */
-case class DirectedStripe(width: Double,
+case class DirectedStripe[D](width: Double,
                           length: Double,
                           curvature: Double,
                           sa: Angle,
                           override val genericAttribs: GenericAttribs = defaultGenericAttribs)
-  extends GenericPath {
+  extends GenericPath[D] {
 
   lazy val curve = new GenericSegCurve {
     override lazy val segments = s1 :: a1 :: s2 :: a2 :: Nil

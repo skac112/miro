@@ -26,10 +26,10 @@ object Leaf {
  * @param r2 radius of second arc (positive value for "thickening" direction)
  * @author slawek
  */
-case class Leaf(pivot: Point,
+case class Leaf[+D](pivot: Point,
                 d1: Double,
                 d2: Double,
-                override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath {
+                override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath[D] {
   lazy val curve = new GenericSegCurve {
     override lazy val segments = List(a1, a2)
     override lazy val closed = true

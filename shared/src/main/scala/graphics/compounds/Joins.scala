@@ -31,14 +31,14 @@ import util.CircArc
  */
 object Joins {
 
-  def baseTop(
+  def baseTop[D](
                baseCircCen: Point,
                baseCircRad: Double,
                p1: Point,
                p2: Point,
                radiusFactor1: Double,
                radiusFactor2: Double,
-               genericAttribs: GenericAttribs = defaultGenericAttribs): PosGraphic[Path] = {
+               genericAttribs: GenericAttribs = defaultGenericAttribs): PosGraphic[Path[D], D] = {
 
     /**
      * Calculates the two and selects one from circles tangent to baseArc and
