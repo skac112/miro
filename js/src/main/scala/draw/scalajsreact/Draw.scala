@@ -29,7 +29,7 @@ class Draw {
       svg_<^.^.cx := pt.x.toString,
       svg_<^.^.cy := pt.y.toString))
 
-    case (r @ Rect(w, h, rot, _), pt) => {
+    case (r @ Rect(w, h, rot, _, _), pt) => {
       val tl = r.tl + pt
       // conversion to degrees
       val rot_rad = rot * 180 / Pi
@@ -42,7 +42,7 @@ class Draw {
         svg_<^.^.transform := rot_str))
     }
 
-    case (s @ Square(size, rot, _), pt) => {
+    case (s @ Square(size, rot, _, _), pt) => {
       val tl = s.tl + pt
       // conversion to degrees
       val rot_rad = rot * 180 / Pi
@@ -57,7 +57,7 @@ class Draw {
 
     case (p: GenericPath[_], pt) => Some(svg_<^.<.path(svg_<^.^.d := pathDAttr(p.subpaths, pt)))
     case (t @ Triangle(p2, p3, ga, _), pt) => Some(svg_<^.<.polygon(svg_<^.^.points := pointsAttr(t.points, pt)))
-    case (q @ Quad(p2, p3, p4, ga), pt) => Some(svg_<^.<.polygon(svg_<^.^.points := pointsAttr(q.points, pt)))
+    case (q @ Quad(p2, p3, p4, ga, _), pt) => Some(svg_<^.<.polygon(svg_<^.^.points := pointsAttr(q.points, pt)))
     case _ => None
   }) map {elem: VdomTag => VdomArray.apply(checkAddGenAttrs(elem , g._1.genericAttribs))}
 

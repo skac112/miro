@@ -33,14 +33,14 @@ class Draw {
                                                      yield xml_elem }</g>)
     case (miro.graphics.Line(e, _, _), pt @ Point(x, y)) => Some(<line x1={ x.toString } y1={ y.toString } x2={ (x + e.x).toString } y2={ (y + e.y).toString }/>)
     case (Circle(r, _, _), Point(x, y)) => Some(<circle r={ r.toString } cx={ x.toString } cy={ y.toString }/>)
-    case (r @ Rect(w, h, rot, _), pt) => {
+    case (r @ Rect(w, h, rot, _, _), pt) => {
       val tl = r.tl + pt
       // conversion to degrees
       val rot_rad = rot * 180 / Pi
       val rot_str = s"rotate($rot_rad, ${tl.x}, ${tl.y})"
       Some(<rect x={ tl.x.toString } y={ tl.y.toString} width={ w.toString } height={ h.toString } transform={ rot_str }/>)
     }
-    case (s @ Square(size, rot, _), pt) => {
+    case (s @ Square(size, rot, _, _), pt) => {
       val tl = s.tl + pt
       // conversion to degrees
       val rot_rad = rot * 180 / Pi
@@ -50,7 +50,7 @@ class Draw {
     // case (Path(subpaths, _), pt) => Some(<path d="{ pathDAttr(subpaths, pt) }"/>)
     case (p: GenericPath[_], pt) => Some(<path d={ pathDAttr(p.subpaths, pt) }/>)
     case (t @ Triangle(_, _, _, _), pt @ Point(_, _)) => Some(<polygon points={ pointsAttr(t.points, pt)}/>)
-    case (q @ Quad(p2, p3, p4, ga), pt) => Some(<polygon points={ pointsAttr(q.points, pt)}/>)
+    case (q @ Quad(p2, p3, p4, ga, _), pt) => Some(<polygon points={ pointsAttr(q.points, pt)}/>)
     case _ => None
   }) map {xml_elem: XMLElem => checkAddGenAttrs(xml_elem , g._1.genericAttribs)}
 
