@@ -41,9 +41,10 @@ object Quad {
 }
 
 case class Quad[+D](v2: Point = Point(1, 0),
-                v3: Point = Point(1, 1),
-                v4: Point = Point(0, 1),
-                override val genericAttribs: GenericAttribs = defaultGenericAttribs)
+                    v3: Point = Point(1, 1),
+                    v4: Point = Point(0, 1),
+                    override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+                    override val metadataO: Option[D] = None)
 extends GenericPolygon with Graphic[D] {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
   override lazy val points = Seq(v2, v3, v4)

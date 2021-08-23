@@ -20,10 +20,11 @@ object DirectedStripe {
   * Section of an sircle ring (arc stripe). Can have positive or negative curvature.
   */
 case class DirectedStripe[D](width: Double,
-                          length: Double,
-                          curvature: Double,
-                          sa: Angle,
-                          override val genericAttribs: GenericAttribs = defaultGenericAttribs)
+                             length: Double,
+                             curvature: Double,
+                             sa: Angle,
+                             override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+                             override val metadataO: Option[D] = None)
   extends GenericPath[D] {
 
   lazy val curve = new GenericSegCurve {

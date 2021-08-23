@@ -15,9 +15,9 @@ object Triangle {
  * Triangle. Default argument values generate unitary equilateral triangle.
  */
 case class Triangle[+D](pt2: Point = Point(1, .0),
-                    pt3: Point = Point(.5, .5 * sqrt(3)),
-                    override val genericAttribs: GenericAttribs = defaultGenericAttribs,
-                       override val metadataO: Option[D] = None)
+                        pt3: Point = Point(.5, .5 * sqrt(3)),
+                        override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+                        override val metadataO: Option[D] = None)
 extends GenericPolygon with Graphic[D] {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
   override lazy val points = Seq(pt2, pt3)

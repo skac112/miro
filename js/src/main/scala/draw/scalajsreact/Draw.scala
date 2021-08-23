@@ -18,7 +18,7 @@ class Draw {
       Some(svg_<^.<.g(svg_<^.^.transform := s"translate(${pt.x}, ${pt.y})")(elems: _*))
     }
 
-    case (miro.graphics.Line(e, _), pt) => Some(svg_<^.<.line(
+    case (miro.graphics.Line(e, _, _), pt) => Some(svg_<^.<.line(
       svg_<^.^.x1 :=  pt.x.toString,
       svg_<^.^.y1 := pt.y.toString,
       svg_<^.^.x2 := (pt + e).x.toString,

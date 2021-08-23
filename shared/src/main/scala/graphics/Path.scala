@@ -19,7 +19,8 @@ object Path {
  * @author slawek
  */
 case class Path[+D](override val subpaths: Subpaths,
- override val genericAttribs: GenericAttribs = defaultGenericAttribs)
+                    override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+                    override val metadataO: Option[D] = None)
 extends GenericPath[D] {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

@@ -38,7 +38,8 @@ object Joins {
                p2: Point,
                radiusFactor1: Double,
                radiusFactor2: Double,
-               genericAttribs: GenericAttribs = defaultGenericAttribs): PosGraphic[Path[D], D] = {
+               genericAttribs: GenericAttribs = defaultGenericAttribs,
+               metadataO: Option[D] = None): PosGraphic[Path[D], D] = {
 
     /**
      * Calculates the two and selects one from circles tangent to baseArc and
@@ -191,6 +192,6 @@ object Joins {
     }
 
     val subpaths: Subpaths = Seq((curve, ori))
-    (new Path(subpaths, genericAttribs), p1)
+    (new Path(subpaths, genericAttribs, metadataO), p1)
   }
 }

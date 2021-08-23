@@ -26,7 +26,6 @@ object Graphic {
  */
 trait Graphic[+D] {
   def metadataO: Option[D] = None
-  // type T = this.type
   import Graphic._
   import graphics._
   import graphics.compounds._

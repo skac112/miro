@@ -17,7 +17,8 @@ case class Ellipse[+D](
   override val rx: Double = 1.0,
   override val ry: Double = 1.0,
   override val rotation: Double = 0.0,
-  override val genericAttribs: GenericAttribs = defaultGenericAttribs)
+  override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+  override val metadataO: Option[D] = None)
 extends GenericEllipse with Graphic[D] {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 

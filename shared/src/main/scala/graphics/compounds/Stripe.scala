@@ -25,10 +25,11 @@ object Stripe {
  * @author slawek
  */
 case class Stripe[+D](rLow: Double,
- rHigh: Double,
- sa: Angle,
- ar: Angle,
- override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath[D] {
+                      rHigh: Double,
+                      sa: Angle,
+                      ar: Angle,
+                      override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+                      override val metadataO: Option[D] = None) extends GenericPath[D] {
   lazy val curve = new GenericSegCurve {
     override lazy val segments = s1 :: ha :: s2 :: la :: Nil
     override lazy val closed = true }

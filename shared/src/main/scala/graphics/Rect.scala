@@ -18,7 +18,8 @@ case class Rect[+D](
   override val width: Double = 1.0,
   override val height: Double = 1.0,
   override val rotation: Double = 0.0,
-  override val genericAttribs: GenericAttribs = defaultGenericAttribs)
+  override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+  override val metadataO: Option[D] = None)
 extends GenericRect with Graphic[D] {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 

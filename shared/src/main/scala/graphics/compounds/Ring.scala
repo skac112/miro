@@ -13,7 +13,10 @@ import com.github.skac112.miro.graphics.GenericPath
  * Pierscien kolowy.
  * @author slawek
  */
-case class Ring[+D](rLow: Double, rHigh: Double, override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath[D] {
+case class Ring[+D](rLow: Double,
+                    rHigh: Double,
+                    override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+                    override val metadataO: Option[D] = None) extends GenericPath[D] {
   private def pathCircle1(r: Double) = {
     val arc1 = Arc(r, r, .0, true, true, Point(-r, -r))
     val arc2 = Arc(r, r, .0, false, true, Point(r, r))

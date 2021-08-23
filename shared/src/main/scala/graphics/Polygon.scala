@@ -10,7 +10,8 @@ import com.github.skac112.vgutils._
  */
 case class Polygon[+D](
                     override val points: Seq[Point],
-                    override val genericAttribs: GenericAttribs = defaultGenericAttribs)
+                    override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+                    override val metadataO: Option[D] = None)
 extends GenericPolygon with Graphic[D] {
   def setGenericAttribs(newGenAttrs: GenericAttribs) = copy(genericAttribs = newGenAttrs)
 }

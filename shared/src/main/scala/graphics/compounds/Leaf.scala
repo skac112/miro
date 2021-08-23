@@ -27,9 +27,10 @@ object Leaf {
  * @author slawek
  */
 case class Leaf[+D](pivot: Point,
-                d1: Double,
-                d2: Double,
-                override val genericAttribs: GenericAttribs = defaultGenericAttribs) extends GenericPath[D] {
+                    d1: Double,
+                    d2: Double,
+                    override val genericAttribs: GenericAttribs = defaultGenericAttribs,
+                    override val metadataO: Option[D] = None) extends GenericPath[D] {
   lazy val curve = new GenericSegCurve {
     override lazy val segments = List(a1, a2)
     override lazy val closed = true

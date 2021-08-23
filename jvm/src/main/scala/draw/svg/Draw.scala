@@ -31,7 +31,7 @@ class Draw {
     case (com.github.skac112.miro.graphics.Group(elements, ga, _), pt) => Some(<g transform={ s"translate(${pt.x}, ${pt.y})" }>{ for (el <- elements;
                                                                                                                 xml_elem <- drawEl(el))
                                                      yield xml_elem }</g>)
-    case (miro.graphics.Line(e, _), pt @ Point(x, y)) => Some(<line x1={ x.toString } y1={ y.toString } x2={ (x + e.x).toString } y2={ (y + e.y).toString }/>)
+    case (miro.graphics.Line(e, _, _), pt @ Point(x, y)) => Some(<line x1={ x.toString } y1={ y.toString } x2={ (x + e.x).toString } y2={ (y + e.y).toString }/>)
     case (Circle(r, _, _), Point(x, y)) => Some(<circle r={ r.toString } cx={ x.toString } cy={ y.toString }/>)
     case (r @ Rect(w, h, rot, _), pt) => {
       val tl = r.tl + pt
